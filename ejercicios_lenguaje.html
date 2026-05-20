@@ -1,0 +1,187 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.ej-wrap { background: #1e3fae; min-height: 100vh; font-family: var(--font-sans); padding-bottom: 2rem; }
+.ej-topbar { background: #1a35a0; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+.ej-btn-inicio { background: white; color: #1a35a0; border: none; border-radius: 30px; padding: 8px 18px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.ej-btn-inicio:hover { background: #e8edf5; }
+.ej-titulo { background: #5aaa1e; color: #173404; border-radius: 30px; padding: 8px 28px; font-size: 20px; font-weight: 500; }
+.ej-subtitle { color: rgba(255,255,255,0.7); font-size: 14px; padding: 12px 20px 0; }
+.ej-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; padding: 16px 20px; }
+.ej-card { background: #c8e84a; border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: transform 0.15s; }
+.ej-card:hover { transform: translateY(-3px); }
+.ej-card-icon { width: 52px; height: 52px; border-radius: 50%; background: #1a35a0; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; }
+.ej-card-name { font-size: 16px; font-weight: 500; color: #173404; }
+.ej-card-cat { font-size: 11px; color: #3b6d11; background: #a8d636; border-radius: 20px; padding: 2px 10px; display: inline-block; margin-top: 2px; }
+.ej-card-desc { font-size: 13px; color: #27500a; line-height: 1.55; flex: 1; }
+.ej-comenzar { background: #1a35a0; color: white; border: none; border-radius: 20px; padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; align-self: flex-start; display: flex; align-items: center; gap: 6px; }
+.ej-comenzar:hover { background: #142b88; }
+.overlay { position: fixed; inset: 0; background: rgba(15,28,90,0.75); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+.overlay.hidden { display: none; }
+.modal { background: #b8e036; border-radius: 22px; padding: 24px; width: 100%; max-width: 520px; position: relative; display: flex; flex-direction: column; gap: 14px; }
+.modal-close { position: absolute; top: 14px; right: 16px; background: #1a35a0; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 500; line-height: 1; }
+.modal-close:hover { background: #142b88; }
+.modal-title { font-size: 18px; font-weight: 500; color: #173404; padding-right: 40px; }
+.modal-video { border-radius: 14px; overflow: hidden; aspect-ratio: 16/9; background: #1a35a0; }
+.modal-video iframe { width: 100%; height: 100%; border: none; display: block; }
+.modal-info { background: #c8e84a; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.modal-row { display: flex; gap: 8px; align-items: flex-start; }
+.modal-label { font-size: 12px; font-weight: 500; color: #1a35a0; background: white; border-radius: 10px; padding: 2px 10px; white-space: nowrap; flex-shrink: 0; }
+.modal-text { font-size: 13px; color: #27500a; line-height: 1.5; }
+</style>
+
+<div class="ej-wrap">
+  <h2 style="position:absolute;left:-9999px">Sección de ejercicios del lenguaje</h2>
+
+  <div class="top-bar">
+    <a class="btn-inicio" href="nexovozinicio.html" title="Volver a la página principal">
+      <span class="arrow">&#8592;</span> Inicio
+    </a>
+    <div class="titulo-btn">Ejercios</div>
+  </div>
+
+  <p class="ej-subtitle">Selecciona un ejercicio para comenzar tu práctica diaria</p>
+
+  <div class="ej-grid">
+
+    <div class="ej-card" onclick="openModal(0)">
+      <div class="ej-card-icon"><i class="ti ti-alphabet-latin" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Pronunciación de palabras</div>
+        <span class="ej-card-cat">Articulación</span>
+      </div>
+      <div class="ej-card-desc">Ejercicios guiados para mejorar la claridad y precisión al pronunciar palabras cotidianas.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+    <div class="ej-card" onclick="openModal(1)">
+      <div class="ej-card-icon"><i class="ti ti-book-open" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Lectura en voz alta</div>
+        <span class="ej-card-cat">Fluidez</span>
+      </div>
+      <div class="ej-card-desc">Práctica de lectura oral para desarrollar fluidez, ritmo y expresividad al leer textos.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+    <div class="ej-card" onclick="openModal(2)">
+      <div class="ej-card-icon"><i class="ti ti-wind" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Respiración para tartamudez</div>
+        <span class="ej-card-cat">Control</span>
+      </div>
+      <div class="ej-card-desc">Técnicas de respiración diafragmática para controlar la fluidez del habla y reducir bloqueos.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+    <div class="ej-card" onclick="openModal(3)">
+      <div class="ej-card-icon"><i class="ti ti-microphone" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Vocalización</div>
+        <span class="ej-card-cat">Voz</span>
+      </div>
+      <div class="ej-card-desc">Ejercicios de vocales y consonantes para fortalecer la musculatura del habla y mejorar la voz.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+    <div class="ej-card" onclick="openModal(4)">
+      <div class="ej-card-icon"><i class="ti ti-brain" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Memoria verbal</div>
+        <span class="ej-card-cat">Cognición</span>
+      </div>
+      <div class="ej-card-desc">Actividades para mejorar la retención y recuperación de palabras, frases y secuencias verbales.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+    <div class="ej-card" onclick="openModal(5)">
+      <div class="ej-card-icon"><i class="ti ti-mood-smile" aria-hidden="true"></i></div>
+      <div>
+        <div class="ej-card-name">Coordinación lengua y labios</div>
+        <span class="ej-card-cat">Motricidad</span>
+      </div>
+      <div class="ej-card-desc">Ejercicios orofaciales para mejorar la coordinación y agilidad de lengua, labios y mandíbula.</div>
+      <button class="ej-comenzar"><i class="ti ti-player-play" style="font-size:14px" aria-hidden="true"></i> Comenzar</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="overlay hidden" id="overlay" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-video"><iframe id="modal-iframe" src="" allowfullscreen loading="lazy"></iframe></div>
+    <div class="modal-info">
+      <div class="modal-row"><span class="modal-label">Para qué sirve</span><span class="modal-text" id="info-sirve"></span></div>
+      <div class="modal-row"><span class="modal-label">Ayuda con</span><span class="modal-text" id="info-ayuda"></span></div>
+      <div class="modal-row"><span class="modal-label">Beneficios</span><span class="modal-text" id="info-benef"></span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var ejercicios = [
+  {
+    titulo: "Pronunciación de palabras",
+    video: "https://www.youtube.com/embed/CrFmxEFzZB8",
+    sirve: "Desarrollar claridad al hablar y corregir errores de articulación en palabras cotidianas.",
+    ayuda: "Dislalia, problemas de articulación y pronunciación imprecisa.",
+    benef: "Mayor claridad al comunicarse, mejor autoconfianza y comprensión por parte de los demás."
+  },
+  {
+    titulo: "Lectura en voz alta",
+    video: "https://www.youtube.com/embed/iTG5GdqElug",
+    sirve: "Mejorar la fluidez lectora, el ritmo del habla y la expresividad al comunicar ideas.",
+    ayuda: "Dislexia, retraso del lenguaje y dificultades de fluidez oral.",
+    benef: "Mejora la velocidad lectora, enriquece el vocabulario y refuerza la confianza al hablar en público."
+  },
+  {
+    titulo: "Respiración para tartamudez",
+    video: "https://www.youtube.com/embed/8TL4mH7F_GQ",
+    sirve: "Controlar el flujo de aire para hablar de manera más fluida y con menos bloqueos.",
+    ayuda: "Tartamudez, ansiedad al hablar y tensión muscular en el habla.",
+    benef: "Reduce los bloqueos, disminuye la ansiedad y proporciona mayor control sobre el ritmo del habla."
+  },
+  {
+    titulo: "Ejercicios de vocalización",
+    video: "https://www.youtube.com/embed/v5L5DFbWGm0",
+    sirve: "Fortalecer los órganos del habla y mejorar la calidad y proyección de la voz.",
+    ayuda: "Disfonías, voz débil, problemas de proyección y trastornos de la voz.",
+    benef: "Voz más clara y potente, mejor articulación y mayor resistencia vocal al hablar."
+  },
+  {
+    titulo: "Memoria verbal",
+    video: "https://www.youtube.com/embed/eGRd8jBdNYg",
+    sirve: "Entrenar la capacidad de recordar y recuperar palabras, frases y secuencias verbales.",
+    ayuda: "Afasia, trastorno del lenguaje expresivo y dificultades de recuperación de palabras.",
+    benef: "Mayor fluidez verbal, mejor recuperación de palabras y enriquecimiento del vocabulario activo."
+  },
+  {
+    titulo: "Coordinación lengua y labios",
+    video: "https://www.youtube.com/embed/5zFKXGFc3Yg",
+    sirve: "Mejorar la agilidad y coordinación de los órganos articulatorios mediante gimnasia orofacial.",
+    ayuda: "Dislalia, dificultades de articulación y problemas de coordinación motora oral.",
+    benef: "Mayor precisión al articular sonidos, mejor control muscular y habla más clara y natural."
+  }
+];
+
+function openModal(i) {
+  var e = ejercicios[i];
+  document.getElementById('modal-title').textContent = e.titulo;
+  document.getElementById('modal-iframe').src = e.video + "?autoplay=1";
+  document.getElementById('info-sirve').textContent = e.sirve;
+  document.getElementById('info-ayuda').textContent = e.ayuda;
+  document.getElementById('info-benef').textContent = e.benef;
+  document.getElementById('overlay').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById('modal-iframe').src = '';
+}
+
+function closeOnOverlay(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+</script>

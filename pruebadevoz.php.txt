@@ -1,0 +1,28 @@
+<?php
+
+include("conexion.php");
+
+$usuario_id = 1;
+
+$pronunciacion = "Problema con la letra R";
+$fluidez = "Buena";
+$articulacion = "Normal";
+$velocidad = "Rápida";
+
+$diagnostico = "Posible dislalia";
+$recomendaciones = "Practicar pronunciación";
+
+$sql = "INSERT INTO pruebas_voz 
+(usuario_id, pronunciacion, fluidez, articulacion, velocidad, diagnostico, recomendaciones)
+
+VALUES
+
+('$usuario_id','$pronunciacion','$fluidez','$articulacion','$velocidad','$diagnostico','$recomendaciones')";
+
+if($conexion->query($sql) === TRUE){
+    echo "Resultados guardados";
+}else{
+    echo "Error";
+}
+
+?>

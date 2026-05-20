@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Biblioteca NEXOVOZ</title>
+
+<!-- ICONOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<!-- CKEDITOR -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left,#2558ff 0%,transparent 30%),
+    radial-gradient(circle at bottom right,#1f9d7a 0%,transparent 25%),
+    linear-gradient(135deg,#07142e,#102b63,#173f9c);
+    min-height:100vh;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+    width:100%;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(10px);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.logo i{
+    color:#67ffb3;
+}
+
+.menu{
+    display:flex;
+    gap:20px;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    opacity:.8;
+    transition:.3s;
+}
+
+.menu a:hover{
+    opacity:1;
+    color:#67ffb3;
+}
+
+/* HERO */
+
+.hero{
+    padding:20px 40px 40px;
+}
+
+.hero h1{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#cfd8ff;
+    max-width:700px;
+    line-height:1.6;
+}
+
+/* BUSCADOR */
+
+.search-box{
+    margin-top:30px;
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:60px;
+    padding:10px;
+    display:flex;
+    align-items:center;
+    backdrop-filter:blur(10px);
+}
+
+.search-box input{
+    flex:1;
+    border:none;
+    background:transparent;
+    padding:15px;
+    color:white;
+    font-size:17px;
+    outline:none;
+}
+
+.search-box input::placeholder{
+    color:#d7dfff;
+}
+
+.search-btn{
+    background:linear-gradient(135deg,#00d084,#009dff);
+    border:none;
+    color:white;
+    padding:15px 28px;
+    border-radius:40px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.search-btn:hover{
+    transform:scale(1.05);
+}
+
+/* TARJETAS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    padding:40px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:28px;
+    padding:25px;
+    backdrop-filter:blur(12px);
+    transition:.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    width:200px;
+    height:200px;
+    background:rgba(0,255,170,0.08);
+    border-radius:50%;
+    top:-120px;
+    right:-80px;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+
+.icon-circle{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#00b7ff,#3d5cff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    margin-bottom:20px;
+}
+
+.tag{
+    display:inline-block;
+    padding:6px 14px;
+    background:rgba(103,255,179,.15);
+    color:#67ffb3;
+    border-radius:20px;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+    font-size:24px;
+}
+
+.card p{
+    color:#d9e1ff;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.read-btn{
+    background:linear-gradient(135deg,#00c896,#005eff);
+    border:none;
+    color:white;
+    padding:12px 24px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.read-btn:hover{
+    transform:scale(1.05);
+}
+
+/* BOTON SUBIR */
+
+.upload-section{
+    text-align:center;
+    padding:20px 40px 60px;
+}
+
+.upload-main-btn{
+    background:linear-gradient(135deg,#00d084,#005eff);
+    border:none;
+    color:white;
+    padding:18px 35px;
+    border-radius:50px;
+    font-size:17px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.upload-main-btn:hover{
+    transform:scale(1.05);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    padding:20px;
+}
+
+.modal-content{
+    width:100%;
+    max-width:900px;
+    background:#ffffff;
+    border-radius:30px;
+    padding:30px;
+    animation:show .4s ease;
+    position:relative;
+}
+
+@keyframes show{
+    from{
+        transform:translateY(30px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.close{
+    position:absolute;
+    top:18px;
+    right:20px;
+    font-size:28px;
+    cursor:pointer;
+    color:#222;
+}
+
+.modal h2{
+    color:#123;
+    margin-bottom:20px;
+}
+
+.editor{
+    margin-bottom:25px;
+}
+
+/* DRAG DROP */
+
+.drop-area{
+    border:3px dashed #6fb8ff;
+    border-radius:25px;
+    padding:50px 20px;
+    text-align:center;
+    transition:.3s;
+    background:#f7fbff;
+}
+
+.drop-area.dragover{
+    background:#dff2ff;
+}
+
+.drop-area i{
+    font-size:45px;
+    color:#2b7fff;
+    margin-bottom:15px;
+}
+
+.drop-area p{
+    color:#555;
+    margin-bottom:20px;
+}
+
+.file-btn{
+    background:linear-gradient(135deg,#4cb8ff,#0078ff);
+    color:white;
+    border:none;
+    padding:14px 25px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.file-list{
+    margin-top:20px;
+    color:#333;
+    text-align:left;
+}
+
+.save-btn{
+    margin-top:25px;
+    width:100%;
+    background:linear-gradient(135deg,#00c896,#006dff);
+    color:white;
+    border:none;
+    padding:18px;
+    border-radius:20px;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .search-box{
+        flex-direction:column;
+        gap:10px;
+        border-radius:25px;
+    }
+
+    .search-btn{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <i class="fa-solid fa-wave-square"></i>
+        Biblioteca NEXOVOZ
+    </div>
+
+    <div class="menu">
+        <a href="#">Inicio</a>
+        <a href="#">Biblioteca</a>
+        <a href="#">Recursos</a>
+        <a href="#">Apoyo</a>
+    </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>Comunicación accesible y apoyo terapéutico</h1>
+
+    <p>
+        Plataforma moderna enfocada en personas con dificultades del habla,
+        lenguaje y comunicación. Recursos terapéuticos, herramientas digitales
+        y acompañamiento humano en un entorno accesible y profesional.
+    </p>
+
+    <!-- BUSCADOR -->
+
+    <div class="search-box">
+
+        <input type="text" placeholder="Buscar dificultad del lenguaje, terapia, recurso..." />
+
+        <button class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Buscar
+        </button>
+
+    </div>
+
+</section>
+
+<!-- TARJETAS -->
+
+<section class="cards">
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-comment-medical"></i>
+        </div>
+
+        <span class="tag">Fluidez</span>
+
+        <h3>Tartamudez</h3>
+
+        <p>
+            Trastorno de la fluidez del habla caracterizado por repeticiones,
+            bloqueos y prolongaciones involuntarias.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-book-open-reader"></i>
+        </div>
+
+        <span class="tag">Lectura</span>
+
+        <h3>Dislexia</h3>
+
+        <p>
+            Dificultad específica del aprendizaje relacionada con la lectura,
+            escritura y reconocimiento de palabras.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+
+        <span class="tag">Neurología</span>
+
+        <h3>Afasia</h3>
+
+        <p>
+            Alteración del lenguaje causada por daño cerebral que afecta
+            comprensión, lectura y comunicación verbal.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-child"></i>
+        </div>
+
+        <span class="tag">Desarrollo</span>
+
+        <h3>Retraso del lenguaje</h3>
+
+        <p>
+            Desarrollo más lento de habilidades lingüísticas comparado con otros
+            niños de la misma edad.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-ear-listen"></i>
+        </div>
+
+        <span class="tag">Ansiedad</span>
+
+        <h3>Mutismo selectivo</h3>
+
+        <p>
+            Dificultad para hablar en situaciones sociales específicas,
+            generalmente relacionada con ansiedad.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="icon-circle">
+            <i class="fa-solid fa-microphone-lines"></i>
+        </div>
+
+        <span class="tag">Comunicación</span>
+
+        <h3>Trastornos del lenguaje</h3>
+
+        <p>
+            Alteraciones que afectan la comprensión, expresión y uso adecuado
+            del lenguaje oral y escrito.
+        </p>
+
+        <button class="read-btn">Leer más</button>
+
+    </div>
+
+</section>
+
+<!-- SUBIR -->
+
+<section class="upload-section">
+
+    <button class="upload-main-btn" onclick="openModal()">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        Subir recurso terapéutico
+    </button>
+
+</section>
+
+<!-- MODAL -->
+
+<div class="modal" id="uploadModal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2>Subir archivo terapéutico</h2>
+
+        <!-- EDITOR -->
+
+        <div class="editor">
+            <textarea id="editor"></textarea>
+        </div>
+
+        <!-- DRAG DROP -->
+
+        <div class="drop-area" id="dropArea">
+
+            <i class="fa-solid fa-file-arrow-up"></i>
+
+            <p>
+                Arrastra aquí archivos PDF, DOCX, audios o imágenes
+            </p>
+
+            <button class="file-btn">
+                Examinar archivos
+            </button>
+
+            <input type="file" id="fileInput" hidden multiple
+            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.mp3,.wav"/>
+
+            <div class="file-list" id="fileList"></div>
+
+        </div>
+
+        <button class="save-btn">
+            Guardar recurso
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/* CKEDITOR */
+
+CKEDITOR.replace('editor');
+
+/* MODAL */
+
+const modal = document.getElementById("uploadModal");
+
+function openModal(){
+    modal.style.display = "flex";
+}
+
+function closeModal(){
+    modal.style.display = "none";
+}
+
+/* CERRAR AL DAR AFUERA */
+
+window.onclick = function(e){
+    if(e.target == modal){
+        closeModal();
+    }
+}
+
+/* DRAG DROP */
+
+const dropArea = document.getElementById("dropArea");
+const fileInput = document.getElementById("fileInput");
+const fileList = document.getElementById("fileList");
+const fileBtn = document.querySelector(".file-btn");
+
+fileBtn.addEventListener("click", () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener("change", showFiles);
+
+dropArea.addEventListener("dragover", (e)=>{
+    e.preventDefault();
+    dropArea.classList.add("dragover");
+});
+
+dropArea.addEventListener("dragleave", ()=>{
+    dropArea.classList.remove("dragover");
+});
+
+dropArea.addEventListener("drop", (e)=>{
+    e.preventDefault();
+
+    dropArea.classList.remove("dragover");
+
+    const files = e.dataTransfer.files;
+
+    displayFiles(files);
+});
+
+function showFiles(){
+    displayFiles(fileInput.files);
+}
+
+function displayFiles(files){
+
+    fileList.innerHTML = "";
+
+    [...files].forEach(file=>{
+
+        let div = document.createElement("div");
+
+        div.style.marginTop = "10px";
+
+        div.innerHTML = `
+            <i class="fa-solid fa-file"></i>
+            ${file.name}
+        `;
+
+        fileList.appendChild(div);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

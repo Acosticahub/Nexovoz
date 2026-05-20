@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NEXOVOZ</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="top">
+    <img class="logo" src="logo.png">
+
+    <div class="title">CeroCapricho</div>
+
+    <img id="userBtn" class="user" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+</header>
+
+<!-- MENU -->
+<section class="menu">
+
+    <a href="#" class="bubble">Ejercicios</a>
+    <a href="#" class="bubble">Citas</a>
+    <a href="5foro_con_boton_inicio.html" class="bubble">Foro</a>
+    <a href="#" class="bubble">Biblioteca</a>
+    <a href="#" class="bubble">Progreso</a>
+
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+
+        <img class="perfil" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+        <input type="text" placeholder="Editar nombre">
+        <input type="email" placeholder="Editar correo">
+        <input type="password" placeholder="Editar contraseña">
+
+        <button onclick="cerrarModal()">Volver al menú</button>
+
+    </div>
+</div>
+
+<script>
+function cerrarModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+document.getElementById("userBtn").onclick = function(){
+    document.getElementById("modal").style.display = "flex";
+}
+</script>
+
+</body>
+</html>

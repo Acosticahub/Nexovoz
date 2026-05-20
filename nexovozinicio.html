@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexovoz</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0d2f6e;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+}
+
+.logo-box {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 3px solid #7dd63b;
+  overflow: hidden;
+  background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+.logo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+.logo-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #1a6fd4, #7dd63b);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #fff; text-align: center;
+  line-height: 1.2;
+}
+
+.user-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #7dd63b;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s;
+}
+
+.user-btn:hover { transform: scale(1.08); }
+
+.user-btn svg { width: 26px; height: 26px; }
+
+/* ── TÍTULO ── */
+.hero {
+  text-align: center;
+  padding: 0 20px 30px;
+}
+
+.title-box {
+  display: inline-block;
+  background: #5bc8f5;
+  border-radius: 30px;
+  padding: 10px 48px;
+  font-size: 36px;
+  font-weight: 800;
+  color: #0d2f6e;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+/* ── GRID DE BOTONES ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+  padding: 0 32px 40px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Globo de diálogo */
+.bubble {
+  background: #7dd63b;
+  border-radius: 22px;
+  padding: 18px 14px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.15s, background 0.15s;
+  min-height: 82px;
+}
+
+.bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 22px;
+  width: 0; height: 0;
+  border-left: 12px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 16px solid #7dd63b;
+}
+
+.bubble:hover { transform: translateY(-4px); background: #6bc82e; }
+.bubble:hover::after { border-top-color: #6bc82e; }
+
+.bubble-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.bubble-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d2f6e;
+  line-height: 1.25;
+}
+
+/* ── MODAL OVERLAY ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 20, 60, 0.55);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay.open { display: flex; }
+
+/* ── MODAL ── */
+.modal {
+  background: #7dd63b;
+  border-radius: 28px;
+  padding: 28px 28px 30px;
+  width: 92%;
+  max-width: 420px;
+  position: relative;
+  animation: popIn 0.22s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px; right: 18px;
+  background: none; border: none;
+  font-size: 22px; color: #0d2f6e;
+  cursor: pointer; line-height: 1;
+  font-weight: 700;
+}
+
+.modal-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  border: 3px solid #0d2f6e;
+  overflow: hidden;
+  background: #fff;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.profile-pic svg { width: 44px; height: 44px; }
+
+.edit-photo-btn {
+  background: #1a6fd4;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.edit-photo-btn:hover { background: #1358b0; }
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field input {
+  width: 100%;
+  background: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 15px;
+  color: #0d2f6e;
+  outline: none;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.field input::placeholder { color: #aaa; }
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0d2f6e;
+  margin-top: 5px;
+  padding-left: 14px;
+}
+
+.save-btn {
+  width: 100%;
+  background: #1a6fd4;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.15s;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.save-btn:hover { background: #1358b0; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-box" title="Nexovoz">
+    <div class="logo-placeholder">NEXO<br>VOZ</div>
+  </div>
+
+  <div></div>
+
+  <button class="user-btn" onclick="abrirModal()" title="Mi perfil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#0d2f6e" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="8" r="4"/>
+      <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- TÍTULO -->
+<div class="hero">
+  <div class="title-box">Nexovoz</div>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <div class="bubble">
+    <a class="btn-inicio" href="ejercicios_lenguaje.html" title="Ejercios">
+      <div class="bubble-icon">🗣️</div>
+      <div class="bubble-label">Ejercios</div>
+  </a>
+  </div>
+  <div class="bubble">
+    
+    <a class="btn-inicio" href="agendar_cita_fonoaudiologia.html" title="calendario">
+        <div class="bubble-icon">📚</div>
+        <div class="bubble-label">calendario</div>
+    </a>
+
+</div>
+  
+  
+  <div class="bubble">
+  <a class="btn-inicio" href="5foro_con_boton_inicio.html" title="Foro">
+    <div class="bubble-icon">💬</div>
+    <div class="bubble-label">Foro</div>
+</a>
+</div>
+  
+
+  <div class="bubble">
+    
+    <a class="btn-inicio" href="biblioteca_lenguaje.html" title="Biblioteca">
+        <div class="bubble-icon">📚</div>
+        <div class="bubble-label">Biblioteca</div>
+    </a>
+
+</div>
+
+  <div class="bubble" onclick="ir('proceso')">
+    <div class="bubble-icon">🏃</div>
+    <div class="bubble-label">Proceso</div>
+  </div> 
+
+  <div class="bubble">
+    
+    <a class="btn-inicio" href="3pruebadevoz.html" title="Mejora tu lenguaje">
+        <div class="bubble-icon">💡</div>
+        <div class="bubble-label">Mejora tu lenguaje</div>
+    </a>
+
+</div>
+
+  
+
+</div>
+
+<!-- MODAL PERFIL -->
+<div class="overlay" id="overlay" onclick="cerrarFuera(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+
+    <div class="modal-top">
+      <div class="profile-pic" id="profile-pic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0d2f6e" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </div>
+      <div>
+        <button class="edit-photo-btn" onclick="editarFoto()">Editar foto</button>
+        <input type="file" id="file-input" accept="image/*" style="display:none" onchange="cargarFoto(event)">
+      </div>
+    </div>
+
+    <div class="field">
+      <input type="text" id="inp-nombre" placeholder="Tu nombre...">
+      <label>Editar nombre</label>
+    </div>
+
+    <div class="field">
+      <input type="email" id="inp-correo" placeholder="tucorreo@email.com">
+      <label>Editar Correo</label>
+    </div>
+
+    <div class="field">
+      <input type="password" id="inp-pass" placeholder="••••••••">
+      <label>Editar contraseña</label>
+    </div>
+
+    <button class="save-btn" onclick="guardar()">Guardar cambios</button>
+  </div>
+</div>
+
+<script>
+function abrirModal(){ document.getElementById('overlay').classList.add('open'); }
+function cerrarModal(){ document.getElementById('overlay').classList.remove('open'); }
+function cerrarFuera(e){ if(e.target===document.getElementById('overlay')) cerrarModal(); }
+
+function editarFoto(){ document.getElementById('file-input').click(); }
+
+function cargarFoto(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const pic = document.getElementById('profile-pic');
+    pic.innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function guardar(){
+  const nombre = document.getElementById('inp-nombre').value.trim();
+  const correo = document.getElementById('inp-correo').value.trim();
+  if(!nombre && !correo){ alert('Completa al menos un campo.'); return; }
+  alert('¡Cambios guardados correctamente!');
+  cerrarModal();
+}
+
+function ir(seccion){
+  const nombres = {
+    ejercicio:'Ejercicio', calendario:'Calendario', foro:'Foro',
+    biblioteca:'Biblioteca', proceso:'Proceso', lenguaje:'Mejora tu lenguaje'
+  };
+  alert('Navegando a: ' + nombres[seccion]);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a3bbf; font-family: 'Arial', sans-serif; min-height: 100vh; padding: 24px 20px; }
+
+  .top-bar { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+
+  .btn-inicio {
+    background: #fff;
+    color: #1a3bbf;
+    font-weight: 900;
+    font-size: .95rem;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 3px solid #1a3bbf;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+  }
+  .btn-inicio:hover { background: #1a3bbf; color: #fff; border-color: #fff; }
+  .btn-inicio .arrow { font-size: 1.1rem; }
+
+  .titulo-btn {
+    background: #7dc21e;
+    color: #000;
+    font-size: 2rem;
+    font-weight: 900;
+    padding: 14px 48px;
+    border-radius: 50px;
+    display: inline-block;
+    letter-spacing: 1px;
+  }
+
+  .input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .input-wrap input {
+    flex: 1;
+    min-width: 200px;
+    padding: 16px 22px;
+    border-radius: 50px;
+    border: 3px solid #000;
+    background: #fff;
+    font-size: 1rem;
+    outline: none;
+    color: #222;
+  }
+  .input-wrap input:focus { border-color: #7dc21e; }
+  .btn-enviar {
+    background: #7dc21e;
+    color: #000;
+    font-weight: 900;
+    font-size: 1rem;
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background .2s, transform .1s;
+    white-space: nowrap;
+  }
+  .btn-enviar:hover { background: #69aa15; }
+  .btn-enviar:active { transform: scale(.97); }
+
+  .posts { display: flex; flex-direction: column; gap: 18px; }
+
+  .post-card {
+    background: linear-gradient(160deg, #b5e04a 0%, #c8ee6a 100%);
+    border-radius: 18px;
+    padding: 18px 22px;
+    color: #111;
+    animation: fadeIn .35s ease both;
+  }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: none; } }
+
+  .post-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #1a3bbf;
+    display: grid; place-items: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: .85rem;
+    flex-shrink: 0;
+  }
+  .post-autor { font-weight: 900; font-size: 1.05rem; color: #1a3bbf; }
+  .post-texto { font-size: .95rem; line-height: 1.55; color: #222; }
+  .btn-mas {
+    background: none; border: none;
+    color: #00aaff; font-weight: 700; font-size: .92rem;
+    cursor: pointer; padding: 0; margin-top: 4px; display: inline-block;
+  }
+  .btn-mas:hover { text-decoration: underline; }
+  .post-fecha { font-size: .75rem; color: #444; margin-top: 8px; }
+  .empty { color: rgba(255,255,255,.6); font-size: .95rem; text-align: center; padding: 32px; }
+</style>
+
+<!-- TOP BAR: botón inicio + título -->
+<div class="top-bar">
+  <a class="btn-inicio" href="nexovozinicio.html" title="Volver a la página principal">
+    <span class="arrow">&#8592;</span> Inicio
+  </a>
+  <div class="titulo-btn">Foro</div>
+</div>
+
+<!-- INPUT -->
+<div class="input-wrap">
+  <input id="inp" type="text" placeholder="Escribe tu mensaje aquí…" maxlength="600"/>
+  <button class="btn-enviar" id="btnEnviar">ENVIAR</button>
+</div>
+
+<!-- POSTS -->
+<div class="posts" id="posts"></div>
+
+<script>
+const posts = [
+  {
+    autor: 'Frank Jhosson',
+    texto: 'Un estudiante con dificultades de lenguaje tuvo que presentarse en clase. Aunque sabía qué decir, se trababa y se ponía nervioso, así que evitaba participar. En una exposición grupal, sus compañeros lo apoyaron y practicó antes. El día de la presentación se bloqueó un poco, pero logró hablar y terminar su parte. No fue perfecto, pero le ayudó a ganar confianza poco a poco.',
+    fecha: '20 abr 2025',
+  }
+];
+let expandidos = {};
+
+function iniciales(n) { return n.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase(); }
+function ahora() { return new Date().toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+function render() {
+  const cont = document.getElementById('posts');
+  if (!posts.length) { cont.innerHTML = '<div class="empty">Sé el primero en publicar.</div>'; return; }
+  cont.innerHTML = posts.map((p,i) => {
+    const corto = p.texto.length > 200;
+    const txt = expandidos[i] ? p.texto : p.texto.slice(0,200)+(corto?'…':'');
+    return `
+      <div class="post-card" style="animation-delay:${i*0.06}s">
+        <div class="post-header">
+          <div class="avatar">${iniciales(p.autor)}</div>
+          <span class="post-autor">${p.autor}</span>
+        </div>
+        <div class="post-texto">${txt}</div>
+        ${corto?`<button class="btn-mas" onclick="toggle(${i})">${expandidos[i]?'ver menos':'mas…'}</button>`:''}
+        <div class="post-fecha">${p.fecha}</div>
+      </div>`;
+  }).join('');
+}
+
+function toggle(i) { expandidos[i]=!expandidos[i]; render(); }
+
+function enviar() {
+  const inp = document.getElementById('inp');
+  const txt = inp.value.trim();
+  if (!txt) { inp.focus(); return; }
+  posts.unshift({ autor: 'Tú', texto: txt, fecha: ahora() });
+  inp.value = ''; expandidos = {}; render();
+}
+
+document.getElementById('btnEnviar').addEventListener('click', enviar);
+document.getElementById('inp').addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();enviar();} });
+
+render();
+</script>

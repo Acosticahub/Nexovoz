@@ -1,0 +1,234 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.ag-wrap { background: #1e3fae; min-height: 100vh; font-family: var(--font-sans); padding-bottom: 2rem; }
+.ag-topbar { background: #1a35a0; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+.ag-btn-inicio { background: white; color: #1a35a0; border: none; border-radius: 30px; padding: 8px 18px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.ag-btn-inicio:hover { background: #e8edf5; }
+.ag-titulo { background: #5aaa1e; color: #173404; border-radius: 30px; padding: 8px 28px; font-size: 20px; font-weight: 500; }
+.ag-body { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 18px 20px; }
+@media (max-width: 620px) { .ag-body { grid-template-columns: 1fr; } }
+.ag-panel { background: #c8e84a; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.ag-panel-title { font-size: 15px; font-weight: 500; color: #173404; display: flex; align-items: center; gap: 8px; }
+.ag-label { font-size: 12px; color: #3b6d11; font-weight: 500; margin-bottom: 4px; }
+.ag-select, .ag-input { width: 100%; border: 2px solid #a8d636; border-radius: 30px; padding: 10px 16px; font-size: 14px; background: white; color: #1a35a0; outline: none; appearance: none; font-family: var(--font-sans); }
+.ag-select:focus, .ag-input:focus { border-color: #1a35a0; }
+.ag-reservar { background: #1a35a0; color: white; border: none; border-radius: 30px; padding: 13px; font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
+.ag-reservar:hover { background: #142b88; }
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cal-month { font-size: 15px; font-weight: 500; color: #173404; }
+.cal-nav { background: #1a35a0; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.cal-nav:hover { background: #142b88; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-day-name { text-align: center; font-size: 11px; color: #3b6d11; font-weight: 500; padding: 4px 0; }
+.cal-day { text-align: center; font-size: 13px; padding: 7px 4px; border-radius: 50%; cursor: pointer; color: #27500a; border: 2px solid transparent; transition: all 0.15s; }
+.cal-day:hover { background: #a8d636; }
+.cal-day.selected { background: #1a35a0; color: white; border-color: #1a35a0; }
+.cal-day.today { border-color: #3b6d11; font-weight: 500; }
+.cal-day.empty { cursor: default; }
+.cal-day.past { color: #9ab84a; cursor: default; }
+.hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.hour-btn { background: white; border: 2px solid #a8d636; border-radius: 20px; padding: 7px 4px; font-size: 12px; color: #1a35a0; cursor: pointer; font-weight: 500; text-align: center; transition: all 0.15s; }
+.hour-btn:hover { background: #a8d636; }
+.hour-btn.selected { background: #1a35a0; color: white; border-color: #1a35a0; }
+.dra-cards { display: flex; flex-direction: column; gap: 8px; }
+.dra-card { background: white; border-radius: 14px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
+.dra-card:hover { border-color: #3b6d11; }
+.dra-card.selected { border-color: #1a35a0; background: #e8f5ff; }
+.dra-avatar { width: 40px; height: 40px; border-radius: 50%; background: #1a35a0; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 500; flex-shrink: 0; }
+.dra-name { font-size: 14px; font-weight: 500; color: #1a35a0; }
+.dra-esp { font-size: 11px; color: #5f5e5a; }
+.overlay { position: fixed; inset: 0; background: rgba(15,28,90,0.8); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+.overlay.hidden { display: none; }
+.modal { background: #b8e036; border-radius: 22px; padding: 28px 24px; width: 100%; max-width: 400px; position: relative; display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+.modal-close { position: absolute; top: 14px; right: 16px; background: #1a35a0; color: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { background: #142b88; }
+.modal-icon { width: 64px; height: 64px; border-radius: 50%; background: #1a35a0; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; }
+.modal-h { font-size: 20px; font-weight: 500; color: #173404; }
+.modal-card { background: white; border-radius: 16px; padding: 14px 18px; width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.modal-row { display: flex; align-items: center; gap: 8px; }
+.modal-badge { background: #c8e84a; color: #3b6d11; border-radius: 10px; padding: 2px 10px; font-size: 11px; font-weight: 500; }
+.modal-val { font-size: 13px; color: #1a35a0; font-weight: 500; }
+.modal-msg { font-size: 13px; color: #27500a; line-height: 1.5; }
+.modal-ok { background: #1a35a0; color: white; border: none; border-radius: 30px; padding: 12px 32px; font-size: 14px; font-weight: 500; cursor: pointer; }
+.modal-ok:hover { background: #142b88; }
+</style>
+
+<div class="ag-wrap">
+  <h2 style="position:absolute;left:-9999px">Agendador de citas con fonoaudióloga</h2>
+  <div class="top-bar">
+    <a class="btn-inicio" href="nexovozinicio.html" title="Volver a la página principal">
+      <span class="arrow">&#8592;</span> Inicio
+    </a>
+    <div class="titulo-btn">Calendario</div>
+  </div>
+
+  <div class="ag-body">
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="ag-panel">
+        <div class="ag-panel-title"><i class="ti ti-user-heart" style="font-size:18px;color:#1a35a0" aria-hidden="true"></i> Selecciona tu fonoaudióloga</div>
+        <div class="dra-cards">
+          <div class="dra-card" id="dra-0" onclick="selectDra(0)">
+            <div class="dra-avatar">LG</div>
+            <div><div class="dra-name">Dra. Laura Gómez</div><div class="dra-esp">Tartamudez · Dislexia</div></div>
+          </div>
+          <div class="dra-card" id="dra-1" onclick="selectDra(1)">
+            <div class="dra-avatar">CT</div>
+            <div><div class="dra-name">Dra. Camila Torres</div><div class="dra-esp">Afasia · Retraso del lenguaje</div></div>
+          </div>
+          <div class="dra-card" id="dra-2" onclick="selectDra(2)">
+            <div class="dra-avatar">SR</div>
+            <div><div class="dra-name">Dra. Sofía Ramírez</div><div class="dra-esp">Dislalia · Mutismo selectivo</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-panel">
+        <div class="ag-panel-title"><i class="ti ti-user" style="font-size:18px;color:#1a35a0" aria-hidden="true"></i> Datos del paciente</div>
+        <div>
+          <div class="ag-label">Nombre completo</div>
+          <input class="ag-input" type="text" id="paciente" placeholder="Ej: Juan Pérez" />
+        </div>
+        <div>
+          <div class="ag-label">Tipo de dificultad</div>
+          <select class="ag-select" id="dificultad">
+            <option value="">Seleccionar...</option>
+            <option>Tartamudez</option>
+            <option>Dislexia</option>
+            <option>Dislalia</option>
+            <option>Afasia</option>
+            <option>Trastorno del lenguaje expresivo</option>
+            <option>Mutismo selectivo</option>
+            <option>Retraso del lenguaje</option>
+            <option>Disgrafía</option>
+            <option>Otra dificultad</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="ag-panel">
+        <div class="ag-panel-title"><i class="ti ti-calendar" style="font-size:18px;color:#1a35a0" aria-hidden="true"></i> Selecciona una fecha</div>
+        <div class="cal-header">
+          <button class="cal-nav" onclick="prevMonth()"><i class="ti ti-chevron-left" style="font-size:14px" aria-hidden="true"></i></button>
+          <div class="cal-month" id="cal-month-label"></div>
+          <button class="cal-nav" onclick="nextMonth()"><i class="ti ti-chevron-right" style="font-size:14px" aria-hidden="true"></i></button>
+        </div>
+        <div class="cal-grid" id="cal-grid">
+          <div class="cal-day-name">Lu</div><div class="cal-day-name">Ma</div><div class="cal-day-name">Mi</div>
+          <div class="cal-day-name">Ju</div><div class="cal-day-name">Vi</div><div class="cal-day-name">Sá</div><div class="cal-day-name">Do</div>
+        </div>
+      </div>
+
+      <div class="ag-panel">
+        <div class="ag-panel-title"><i class="ti ti-clock" style="font-size:18px;color:#1a35a0" aria-hidden="true"></i> Hora disponible</div>
+        <div class="hours-grid" id="hours-grid">
+          <div class="hour-btn" onclick="selectHour(this)">08:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">09:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">10:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">10:30</div>
+          <div class="hour-btn" onclick="selectHour(this)">11:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">14:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">15:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">16:00</div>
+          <div class="hour-btn" onclick="selectHour(this)">17:00</div>
+        </div>
+      </div>
+
+      <button class="ag-reservar" onclick="reservar()">
+        <i class="ti ti-calendar-check" style="font-size:18px" aria-hidden="true"></i> Reservar cita
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="overlay" onclick="closeOnOverlay(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
+    <div class="modal-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+    <div class="modal-h">¡Cita confirmada!</div>
+    <div class="modal-card">
+      <div class="modal-row"><span class="modal-badge">Fonoaudióloga</span><span class="modal-val" id="conf-dra"></span></div>
+      <div class="modal-row"><span class="modal-badge">Paciente</span><span class="modal-val" id="conf-pac"></span></div>
+      <div class="modal-row"><span class="modal-badge">Fecha</span><span class="modal-val" id="conf-fecha"></span></div>
+      <div class="modal-row"><span class="modal-badge">Hora</span><span class="modal-val" id="conf-hora"></span></div>
+      <div class="modal-row"><span class="modal-badge">Motivo</span><span class="modal-val" id="conf-mot"></span></div>
+    </div>
+    <div class="modal-msg">Tu cita ha sido agendada exitosamente. Recibirás un recordatorio antes de tu consulta. ¡Nos vemos pronto!</div>
+    <button class="modal-ok" onclick="closeModal()"><i class="ti ti-check" style="font-size:15px;vertical-align:-2px;margin-right:6px" aria-hidden="true"></i>Entendido</button>
+  </div>
+</div>
+
+<script>
+var dras = ["Dra. Laura Gómez","Dra. Camila Torres","Dra. Sofía Ramírez"];
+var selDra = -1, selDay = 0, selHour = "", curDate = new Date();
+curDate.setDate(1);
+
+var meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+var today = new Date();
+
+function buildCal() {
+  var grid = document.getElementById('cal-grid');
+  while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+  document.getElementById('cal-month-label').textContent = meses[curDate.getMonth()] + ' ' + curDate.getFullYear();
+  var first = new Date(curDate.getFullYear(), curDate.getMonth(), 1);
+  var startDay = (first.getDay() + 6) % 7;
+  for (var i = 0; i < startDay; i++) {
+    var e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
+  }
+  var days = new Date(curDate.getFullYear(), curDate.getMonth()+1, 0).getDate();
+  for (var d = 1; d <= days; d++) {
+    var el = document.createElement('div');
+    var thisD = new Date(curDate.getFullYear(), curDate.getMonth(), d);
+    var isPast = thisD < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    el.className = 'cal-day' + (isPast ? ' past' : '');
+    if (!isPast) {
+      var dd = d;
+      el.onclick = (function(day, elem){ return function() { selectDay(day, elem); }; })(d, el);
+    }
+    if (curDate.getFullYear()===today.getFullYear() && curDate.getMonth()===today.getMonth() && d===today.getDate()) el.classList.add('today');
+    if (d === selDay && curDate.getMonth()===selMonth && curDate.getFullYear()===selYear) el.classList.add('selected');
+    el.textContent = d;
+    grid.appendChild(el);
+  }
+}
+var selMonth = -1, selYear = -1;
+function selectDay(d, el) {
+  document.querySelectorAll('.cal-day.selected').forEach(function(e){ e.classList.remove('selected'); });
+  el.classList.add('selected');
+  selDay = d; selMonth = curDate.getMonth(); selYear = curDate.getFullYear();
+}
+function prevMonth() { curDate.setMonth(curDate.getMonth()-1); buildCal(); }
+function nextMonth() { curDate.setMonth(curDate.getMonth()+1); buildCal(); }
+function selectDra(i) {
+  document.querySelectorAll('.dra-card').forEach(function(c){ c.classList.remove('selected'); });
+  document.getElementById('dra-'+i).classList.add('selected');
+  selDra = i;
+}
+function selectHour(el) {
+  document.querySelectorAll('.hour-btn').forEach(function(b){ b.classList.remove('selected'); });
+  el.classList.add('selected');
+  selHour = el.textContent;
+}
+function reservar() {
+  var pac = document.getElementById('paciente').value.trim();
+  var dif = document.getElementById('dificultad').value;
+  if (selDra < 0) { alert('Por favor selecciona una fonoaudióloga.'); return; }
+  if (!selDay) { alert('Por favor selecciona una fecha.'); return; }
+  if (!selHour) { alert('Por favor selecciona una hora.'); return; }
+  if (!pac) { alert('Por favor ingresa el nombre del paciente.'); return; }
+  if (!dif) { alert('Por favor selecciona el tipo de dificultad.'); return; }
+  var fechaStr = selDay + ' de ' + meses[selMonth] + ' ' + selYear;
+  document.getElementById('conf-dra').textContent = dras[selDra];
+  document.getElementById('conf-pac').textContent = pac;
+  document.getElementById('conf-fecha').textContent = fechaStr;
+  document.getElementById('conf-hora').textContent = selHour + ' hrs';
+  document.getElementById('conf-mot').textContent = dif;
+  document.getElementById('overlay').classList.remove('hidden');
+}
+function closeModal() { document.getElementById('overlay').classList.add('hidden'); }
+function closeOnOverlay(e) { if (e.target===document.getElementById('overlay')) closeModal(); }
+buildCal();
+</script>

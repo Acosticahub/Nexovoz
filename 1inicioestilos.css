@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+.fondo {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: url('fondo.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+.fondo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(255,255,255,0.3);
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* FONDO */
+.fondo {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: url('fondo.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+/* EFECTO BLUR */
+.fondo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(255,255,255,0.3);
+}
+
+/* CAJA LOGIN / REGISTRO */
+.login-box {
+    position: relative;
+    z-index: 1;
+    background: #1a4f9c;
+    padding: 30px 25px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+.logo {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+/* TITULO */
+.login-box h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* INPUTS */
+.login-box input,
+.login-box select {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+/* BOTÓN PRINCIPAL */
+.login-box button {
+    background: #3a8a78;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    width: 60%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login-box button:hover {
+    background: #2a6a5a;
+}
+
+/* LINKS */
+.login-box a {
+    display: block;
+    margin-top: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-box a:hover {
+    text-decoration: underline;
+}
+
+/* MENSAJES */
+#respuesta {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 14px;
+}

@@ -1,0 +1,176 @@
+
+<style>
+  .bib-wrap { background: #1e3fae; min-height: 100vh; padding: 0 0 2rem; font-family: var(--font-sans); }
+  .bib-topbar { background: #1a35a0; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+  .bib-btn-inicio { background: white; color: #1a35a0; border: none; border-radius: 30px; padding: 8px 18px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .bib-titulo { background: #5aaa1e; color: #173404; border-radius: 30px; padding: 8px 24px; font-size: 20px; font-weight: 500; }
+  .bib-search-wrap { padding: 20px 20px 16px; display: flex; gap: 10px; }
+  .bib-search { flex: 1; border-radius: 30px; border: 2.5px solid #1a35a0; padding: 12px 20px; font-size: 15px; outline: none; background: white; color: #1a35a0; }
+  .bib-search:focus { border-color: #5aaa1e; }
+  .bib-enviar { background: #3a7d14; color: white; border: none; border-radius: 30px; padding: 12px 22px; font-size: 14px; font-weight: 500; cursor: pointer; letter-spacing: 0.5px; }
+  .bib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; padding: 0 20px; }
+  .bib-card { background: #c8e84a; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .bib-card-header { display: flex; align-items: center; gap: 12px; }
+  .bib-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1a35a0; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; flex-shrink: 0; }
+  .bib-card-name { font-size: 16px; font-weight: 500; color: #173404; }
+  .bib-card-cat { font-size: 12px; color: #3b6d11; background: #a8d636; border-radius: 20px; padding: 2px 10px; display: inline-block; }
+  .bib-card-desc { font-size: 13px; color: #27500a; line-height: 1.6; flex: 1; }
+  .bib-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .bib-card-date { font-size: 12px; color: #3b6d11; }
+  .bib-leer { background: #1a35a0; color: white; border: none; border-radius: 20px; padding: 7px 16px; font-size: 13px; cursor: pointer; font-weight: 500; }
+  .bib-leer:hover { background: #142b88; }
+  .bib-tag { font-size: 11px; color: #3b6d11; background: #b0dc3a; border-radius: 20px; padding: 2px 8px; }
+  .hidden { display: none !important; }
+</style>
+
+<div class="bib-wrap">
+  <h2 class="sr-only" style="position:absolute;left:-9999px">Biblioteca digital de dificultades del lenguaje</h2>
+
+  <div class="top-bar">
+    <a class="btn-inicio" href="nexovozinicio.html" title="Volver a la página principal">
+      <span class="arrow">&#8592;</span> Inicio
+    </a>
+    <div class="titulo-btn">Biblioteca</div>
+  </div>
+  <div class="bib-search-wrap">
+    <input class="bib-search" type="text" id="buscador" placeholder="Buscar dificultad del lenguaje..." oninput="filtrar(this.value)" />
+    <button class="bib-enviar"><i class="ti ti-search" style="font-size:15px;vertical-align:-2px;margin-right:5px" aria-hidden="true"></i>Buscar</button>
+  </div>
+
+  <div class="bib-grid" id="grid">
+
+    <div class="bib-card" data-name="tartamudez">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-microphone" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Tartamudez</div>
+          <span class="bib-card-cat">Fluidez</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Trastorno de la fluidez del habla caracterizado por repeticiones, prolongaciones e interrupciones involuntarias al hablar.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la tartamudez, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="dislexia">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-book" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Dislexia</div>
+          <span class="bib-card-cat">Lectura</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Dificultad específica del aprendizaje que afecta la lectura, la escritura y la ortografía, sin relación con la inteligencia.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la dislexia, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="dislalia">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-volume" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Dislalia</div>
+          <span class="bib-card-cat">Articulación</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Alteración en la articulación de los fonemas, ya sea por ausencia, sustitución o deformación de sonidos del lenguaje.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la dislalia, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="afasia">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-brain" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Afasia</div>
+          <span class="bib-card-cat">Neurológico</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Pérdida o deterioro del lenguaje causada por daño cerebral, que afecta la capacidad para hablar, comprender, leer y escribir.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la afasia, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="trastorno del lenguaje expresivo">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-message-circle" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Trastorno expresivo</div>
+          <span class="bib-card-cat">Expresión</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Dificultad para expresar ideas y pensamientos verbalmente, con vocabulario limitado y oraciones incompletas o incorrectas.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el trastorno del lenguaje expresivo, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="mutismo selectivo">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-user-question" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Mutismo selectivo</div>
+          <span class="bib-card-cat">Ansiedad</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Incapacidad para hablar en situaciones sociales específicas a pesar de poder hacerlo en otros contextos, generalmente asociado a la ansiedad.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el mutismo selectivo, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="retraso del lenguaje">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-clock" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Retraso del lenguaje</div>
+          <span class="bib-card-cat">Desarrollo</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Desarrollo más lento de las habilidades lingüísticas en comparación con otros niños de la misma edad, afectando vocabulario y gramática.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el retraso del lenguaje, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+    <div class="bib-card" data-name="disgrafía disgrafia">
+      <div class="bib-card-header">
+        <div class="bib-avatar"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+        <div>
+          <div class="bib-card-name">Disgrafía</div>
+          <span class="bib-card-cat">Escritura</span>
+        </div>
+      </div>
+      <div class="bib-card-desc">Dificultad específica para escribir a mano de forma legible y fluida, que puede afectar la forma de las letras, el espaciado y la velocidad.</div>
+      <div class="bib-card-footer">
+        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
+        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la disgrafía, sus causas y tratamientos')">Leer más</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function filtrar(q) {
+  var cards = document.querySelectorAll('.bib-card');
+  q = q.toLowerCase().trim();
+  cards.forEach(function(c) {
+    var name = c.getAttribute('data-name') || '';
+    var desc = c.querySelector('.bib-card-desc') ? c.querySelector('.bib-card-desc').textContent.toLowerCase() : '';
+    var match = name.includes(q) || desc.includes(q);
+    c.classList.toggle('hidden', !match);
+  });
+}
+</script>

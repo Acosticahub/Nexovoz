@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca NEXOVOZ</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background:#1838b9;
+    color:white;
+    padding:30px;
+}
+
+/* TITULOS */
+
+h1{
+    margin-bottom:10px;
+    font-size:35px;
+}
+
+.sub{
+    margin-bottom:30px;
+    color:#d6e0ff;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+/* TARJETAS */
+
+.card{
+    background:#c8ea41;
+    color:#111;
+    border-radius:25px;
+    padding:25px;
+    position:relative;
+    transition:0.3s;
+    min-height:260px;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    width:55px;
+    height:55px;
+    background:#1838b9;
+    border-radius:50%;
+    margin-bottom:20px;
+}
+
+.tag{
+    display:inline-block;
+    background:#b1d52d;
+    padding:5px 14px;
+    border-radius:20px;
+    margin:10px 0;
+    font-size:14px;
+}
+
+.card p{
+    margin-top:15px;
+    line-height:1.6;
+}
+
+/* BOTONES */
+
+.btn{
+    margin-top:20px;
+    padding:12px 24px;
+    border:none;
+    border-radius:30px;
+    background:#1838b9;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#10298a;
+}
+
+/* BOTON MAS */
+
+.add-card{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:70px;
+    cursor:pointer;
+    color:#1838b9;
+    font-weight:bold;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal-content{
+    background:white;
+    width:100%;
+    max-width:700px;
+    border-radius:25px;
+    padding:35px;
+    color:#111;
+    position:relative;
+    animation:show .3s ease;
+}
+
+@keyframes show{
+    from{
+        transform:scale(.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:15px;
+    font-size:30px;
+    cursor:pointer;
+}
+
+/* FORM */
+
+.form-group{
+    margin-top:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:2px solid #ddd;
+    outline:none;
+}
+
+textarea{
+    resize:none;
+    height:120px;
+}
+
+.file-box{
+    border:2px dashed #1838b9;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    background:#f4f7ff;
+}
+
+.save-btn{
+    margin-top:25px;
+    width:100%;
+    background:#1838b9;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:15px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.save-btn:hover{
+    background:#10298a;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Ejercicios</h1>
+<p class="sub">Selecciona un ejercicio para comenzar tu práctica diaria</p>
+
+<div class="grid">
+
+    <!-- TARJETA -->
+    <div class="card">
+        <div class="icon"></div>
+        <h2>Pronunciación de palabras</h2>
+        <span class="tag">Articulación</span>
+
+        <p>
+            Ejercicios guiados para mejorar la claridad y precisión.
+        </p>
+
+        <button class="btn">Comenzar</button>
+    </div>
+
+    <!-- TARJETA -->
+    <div class="card">
+        <div class="icon"></div>
+        <h2>Lectura en voz alta</h2>
+        <span class="tag">Fluidez</span>
+
+        <p>
+            Mejora ritmo, fluidez y expresividad al leer textos.
+        </p>
+
+        <button class="btn">Comenzar</button>
+    </div>
+
+    <!-- TARJETA -->
+    <div class="card">
+        <div class="icon"></div>
+        <h2>Respiración</h2>
+        <span class="tag">Control</span>
+
+        <p>
+            Técnicas para controlar la fluidez del habla.
+        </p>
+
+        <button class="btn">Comenzar</button>
+    </div>
+
+    <!-- BOTON MAS -->
+    <div class="card add-card" onclick="abrirModal()">
+        +
+    </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="cerrarModal()">&times;</span>
+
+        <h2>Agregar nuevo ejercicio</h2>
+
+        <form action="guardar.php" method="POST" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Categoría</label>
+                <input type="text" name="categoria">
+            </div>
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea name="descripcion"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Subir archivo</label>
+
+                <div class="file-box">
+                    <input type="file" name="archivo">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Link de video</label>
+                <input type="url" name="video" placeholder="https://youtube.com/...">
+            </div>
+
+            <button class="save-btn">
+                Guardar ejercicio
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+function abrirModal(){
+    document.getElementById("modal").style.display = "flex";
+}
+
+function cerrarModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+window.onclick = function(e){
+
+    let modal = document.getElementById("modal");
+
+    if(e.target == modal){
+        modal.style.display = "none";
+    }
+}
+
+</script>
+
+</body>
+</html>
