@@ -308,7 +308,7 @@ body{
 <script>
 
 function entrarUsuario(){
-    window.location.href='/Nexovoz/pages/nexovozinicio.html';
+    window.location.href='/Nexovoz/pages/ver_usuarios.php';
 }
 
 function entrarFono(){
