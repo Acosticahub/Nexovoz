@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         echo "<script>
             alert('El usuario ya existe');
-            window.location='../pages/1 2registro.html';
+            window.location='/Nexovoz/pages/1 2registro.html';
         </script>";
 
     } else {
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             echo "<script>
                 alert('Registro exitoso');
-                window.location='../1Inisiodesesion.html';
+                window.location='/Nexovoz/1Inisiodesesion.html';
             </script>";
 
         } else {

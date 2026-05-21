@@ -26,16 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && $pass === $user['contraseña']) {
+    if ($user && $pass !== '' && $pass === $user['contraseña']) {
 
         $_SESSION['usuario_id']     = $user['id'];
         $_SESSION['usuario_nombre'] = $user['nombre'];
         $_SESSION['usuario_rol']    = $user['rol'];
 
         if ($user['rol'] === 'fonoaudiologa') {
-            header("Location: ../pages/indexadmid.php");
+            header("Location: /Nexovoz/pages/indexadmid.php");
         } else {
-            header("Location: ../pages/nexovozinicio.html");
+            header("Location: /Nexovoz/pages/nexovozinicio.html");
         }
         exit();
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         echo "<script>
             alert('Intentar Nuevamente Conectarte');
-            window.location='../1Inisiodesesion.html';
+            window.location='/Nexovoz/1Inisiodesesion.html';
         </script>";
     }
 }

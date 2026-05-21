@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($nombre) || empty($correo)) {
         echo "<script>
             alert('El nombre y correo no pueden estar vacíos');
-            window.location='../pages/nexovozinicio.html';
+            window.location='/Nexovoz/pages/nexovozinicio.html';
         </script>";
         exit();
     }
@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['usuario_nombre'] = $nombre;
         echo "<script>
             alert('Cambios guardados correctamente');
-            window.location='../pages/nexovozinicio.html';
+            window.location='/Nexovoz/pages/nexovozinicio.html';
         </script>";
     } else {
         echo "<script>
             alert('Error al guardar los cambios');
-            window.location='../pages/nexovozinicio.html';
+            window.location='/Nexovoz/pages/nexovozinicio.html';
         </script>";
     }
 }
