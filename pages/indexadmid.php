@@ -308,13 +308,11 @@ body{
 <script>
 
 function entrarUsuario(){
-    alert("Bienvenido Usuario");
-    window.location.href='nexovozinicio.html';
+    window.location.href='/Nexovoz/pages/nexovozinicio.html';
 }
 
 function entrarFono(){
-    alert("Bienvenido Fonodiólogo");
-    window.location.href='nexovozinicio.html';
+    window.location.href='/Nexovoz/pages/ejerciosfono.html';
 }
 
 </script>
