@@ -6,9 +6,17 @@ include("conexion.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $id     = $_SESSION['usuario_id'];
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
+    $nombre = trim($_POST['nombre']);
+    $correo = trim($_POST['correo']);
     $pass   = $_POST['contraseña'];
+
+    if (empty($nombre) || empty($correo)) {
+        echo "<script>
+            alert('El nombre y correo no pueden estar vacíos');
+            window.location='../pages/nexovozinicio.html';
+        </script>";
+        exit();
+    }
 
     if (!empty($pass)) {
         $stmt = $conexion->prepare("UPDATE usuarios SET nombre=?, correo=?, contraseña=? WHERE id=?");
