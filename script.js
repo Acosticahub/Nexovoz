@@ -64,6 +64,9 @@ function grabar() {
 }
 
 function mostrarResultado() {
+    const diagnostico     = "Posible dislalia (errores en pronunciación)";
+    const recomendaciones = "Practicar lectura en voz alta, repetir palabras y controlar la respiración.";
+
     testArea.innerHTML = `
         <h2>Resultado</h2>
         <ul>
@@ -83,4 +86,14 @@ function mostrarResultado() {
         <br>
         <button onclick="location.reload()" class="btn-home">Reiniciar</button>
     `;
+
+    const datos = new FormData();
+    datos.append('pronunciacion',   'Posible dislalia');
+    datos.append('fluidez',         'Aceptable');
+    datos.append('articulacion',    'Normal');
+    datos.append('velocidad',       'Ligeramente rápida');
+    datos.append('diagnostico',     diagnostico);
+    datos.append('recomendaciones', recomendaciones);
+
+    fetch('guardar_resultado.php', { method: 'POST', body: datos });
 }

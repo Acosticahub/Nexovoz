@@ -122,17 +122,10 @@
 <div class="posts" id="posts"></div>
 
 <script>
-const posts = [
-  {
-    autor: 'Frank Jhosson',
-    texto: 'Un estudiante con dificultades de lenguaje tuvo que presentarse en clase. Aunque sabía qué decir, se trababa y se ponía nervioso, así que evitaba participar. En una exposición grupal, sus compañeros lo apoyaron y practicó antes. El día de la presentación se bloqueó un poco, pero logró hablar y terminar su parte. No fue perfecto, pero le ayudó a ganar confianza poco a poco.',
-    fecha: '20 abr 2025',
-  }
-];
+let posts = [];
 let expandidos = {};
 
 function iniciales(n) { return n.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase(); }
-function ahora() { return new Date().toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
 
 function render() {
   const cont = document.getElementById('posts');
@@ -155,16 +148,36 @@ function render() {
 
 function toggle(i) { expandidos[i]=!expandidos[i]; render(); }
 
+function cargarMensajes() {
+  fetch('mostrar_foro.php')
+    .then(res => res.json())
+    .then(data => {
+      posts = data.map(m => ({ autor: m.nombre || 'Anónimo', texto: m.mensaje, fecha: m.fecha }));
+      render();
+    });
+}
+
 function enviar() {
   const inp = document.getElementById('inp');
   const txt = inp.value.trim();
   if (!txt) { inp.focus(); return; }
-  posts.unshift({ autor: 'Tú', texto: txt, fecha: ahora() });
-  inp.value = ''; expandidos = {}; render();
+
+  const datos = new FormData();
+  datos.append('mensaje', txt);
+
+  fetch('foro.php', { method: 'POST', body: datos })
+    .then(res => res.text())
+    .then(data => {
+      if (data === 'ok') {
+        inp.value = '';
+        expandidos = {};
+        cargarMensajes();
+      }
+    });
 }
 
 document.getElementById('btnEnviar').addEventListener('click', enviar);
 document.getElementById('inp').addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();enviar();} });
 
-render();
+cargarMensajes();
 </script>

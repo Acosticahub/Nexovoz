@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $server = "localhost";
 $username = "root";
 $password = "";
@@ -24,6 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $result->fetch_assoc();
 
     if ($user && $pass === $user['contraseña']) {
+
+        $_SESSION['usuario_id']     = $user['id'];
+        $_SESSION['usuario_nombre'] = $user['nombre'];
+        $_SESSION['usuario_rol']    = $user['rol'];
 
         header("Location: nexovozinicio.html");
         exit();
