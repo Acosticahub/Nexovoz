@@ -48,7 +48,8 @@ Nexovoz/
 │   ├── img/logo.png            → Logo circular NEXOVOZ
 │   ├── img/microfono.png       → Ícono micrófono
 │   ├── css/styles.css          → (legacy, reemplazado por estilos inline)
-│   └── js/script.js            → (legacy, lógica inline en 3pruebadevoz.html)
+│   ├── js/script.js            → (legacy, lógica inline en 3pruebadevoz.html)
+│   └── js/navbar-avatar.js     → Script global: carga avatar en #avatarBtn de cualquier página
 │
 ├── nexovoz.sql                 → Esquema BD (incluye columna avatar en usuarios)
 │
@@ -74,6 +75,16 @@ Nexovoz/
 | `fonoaudiologas` | id, nombre, especialidad |
 
 > **Migración requerida** si la BD ya existe: `ALTER TABLE usuarios ADD COLUMN avatar VARCHAR(255) DEFAULT NULL;`
+
+---
+
+## Convenciones globales
+
+### Avatar del usuario (`#avatarBtn`)
+- Todas las páginas incluyen `<script src="../assets/js/navbar-avatar.js"></script>` al final del body.
+- El script carga el avatar del usuario desde `obtener_usuario.php` y lo muestra en el elemento con `id="avatarBtn"`.
+- En páginas con dropdown propio (nexovozinicio, indexadmid, ejerciosfono), el botón lleva `data-nolink` para que el script no sobreescriba el `onclick`.
+- Para actualizar el avatar después de guardar cambios, usar `window.updateGlobalAvatar(url)`.
 
 ---
 
