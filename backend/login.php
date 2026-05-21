@@ -31,7 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['usuario_nombre'] = $user['nombre'];
         $_SESSION['usuario_rol']    = $user['rol'];
 
-        header("Location: ../pages/nexovozinicio.html");
+        if ($user['rol'] === 'fonoaudiologa') {
+            header("Location: ../pages/indexadmid.php");
+        } else {
+            header("Location: ../pages/nexovozinicio.html");
+        }
         exit();
 
     } else {

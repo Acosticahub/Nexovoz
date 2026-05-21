@@ -309,12 +309,12 @@ body{
 
 function entrarUsuario(){
     alert("Bienvenido Usuario");
-    window.location.href="usuario.php";
+    window.location.href='nexovozinicio.html';
 }
 
 function entrarFono(){
     alert("Bienvenido Fonodiólogo");
-    window.location.href="fono.php";
+    window.location.href='nexovozinicio.html';
 }
 
 </script>
