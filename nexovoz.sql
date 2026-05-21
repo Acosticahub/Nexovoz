@@ -152,6 +152,7 @@ CREATE TABLE `usuarios` (
   `correo` varchar(100) NOT NULL,
   `contraseña` varchar(255) NOT NULL,
   `rol` enum('usuario','fonoaudiologa','admin') DEFAULT 'usuario',
+  `avatar` varchar(255) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

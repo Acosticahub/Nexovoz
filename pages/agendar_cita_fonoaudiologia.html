@@ -588,7 +588,7 @@ body {
         </div>
 
         <div class="conf-footer">
-            <button class="conf-btn" onclick="closeModal()">Entendido</button>
+            <button class="conf-btn" id="btnConfirmar" onclick="confirmarCita()">Confirmar cita</button>
         </div>
 
     </div>
@@ -696,6 +696,40 @@ function showError(msg) {
 }
 
 function closeModal() { document.getElementById('overlay').classList.add('hidden'); }
+
+function confirmarCita() {
+    var btn = document.getElementById('btnConfirmar');
+    btn.disabled = true; btn.textContent = 'Guardando...';
+    var pad = function(n){ return n < 10 ? '0'+n : n; };
+    var fechaDB = selYear + '-' + pad(selMonth + 1) + '-' + pad(selDay);
+    var horaDB  = selHour.replace(' hrs','').trim();
+    if (horaDB.length === 5) horaDB += ':00';
+    var fd = new FormData();
+    fd.append('fecha',           fechaDB);
+    fd.append('hora',            horaDB);
+    fd.append('nombre_paciente', document.getElementById('paciente').value.trim());
+    fd.append('tipo_dificultad', document.getElementById('dificultad').value);
+    fetch('../backend/guardar_cita.php', { method:'POST', body: fd })
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+            closeModal();
+            if (d.ok) {
+                showExito('Cita agendada correctamente');
+            } else {
+                showError(d.msg || 'No se pudo guardar la cita');
+            }
+        })
+        .catch(function(){ closeModal(); showError('Error de conexion'); })
+        .finally(function(){ btn.disabled = false; btn.textContent = 'Confirmar cita'; });
+}
+
+function showExito(msg) {
+    var btn = document.querySelector('.ag-reservar');
+    var orig = btn.innerHTML;
+    btn.style.background = '#27ae60';
+    btn.innerHTML = '&#10003; ' + msg;
+    setTimeout(function(){ btn.style.background = ''; btn.innerHTML = orig; }, 3000);
+}
 function closeOnOverlay(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
 
 buildCal();
