@@ -1,683 +1,410 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Biblioteca NEXOVOZ</title>
-
-<!-- ICONOS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-<!-- CKEDITOR -->
-<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-
+<title>Biblioteca - NEXOVOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(140deg,#071a4e 0%,#0d2f6e 45%,#0a3d1f 100%);min-height:100vh;color:white;overflow-x:hidden;}
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Segoe UI', sans-serif;
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(0,0,0,0.2);backdrop-filter:blur(8px);position:sticky;top:0;z-index:30;}
+.nav-logo{width:52px;height:52px;border-radius:50%;border:2.5px solid #7dd63b;overflow:hidden;background:white;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;}
+.nav-logo img{width:100%;height:100%;object-fit:cover;}
+.nav-links{display:flex;gap:26px;}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.15s;}
+.nav-links a:hover,.nav-links a.active{color:#7dd63b;}
+.nav-up-btn{background:#7dd63b;color:#0d2060;border:none;border-radius:20px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:background 0.2s;}
+.nav-up-btn:hover{background:#8fe84e;}
+
+.hero{padding:44px 44px 20px;}
+.hero-tag{display:inline-block;background:rgba(125,214,59,0.15);border:1px solid rgba(125,214,59,0.35);color:#7dd63b;font-size:12px;font-weight:700;border-radius:30px;padding:5px 16px;margin-bottom:14px;letter-spacing:1px;}
+.hero h1{font-size:30px;font-weight:800;margin-bottom:8px;}
+.hero p{color:rgba(255,255,255,0.55);font-size:14px;line-height:1.6;max-width:580px;}
+
+.search-wrap{margin:26px 44px 0;display:flex;gap:10px;max-width:640px;}
+.search-wrap input{flex:1;padding:13px 20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:40px;color:white;font-family:'Poppins',sans-serif;font-size:14px;outline:none;transition:border 0.2s;backdrop-filter:blur(6px);}
+.search-wrap input:focus{border-color:rgba(125,214,59,0.5);}
+.search-wrap input::placeholder{color:rgba(255,255,255,0.4);}
+.search-count{margin:10px 44px 0;font-size:12px;color:rgba(255,255,255,0.4);min-height:18px;}
+
+.sec-t{font-size:13px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;margin:26px 44px 14px;display:flex;align-items:center;gap:8px;}
+.sec-t::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08);}
+
+.bib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;padding:0 44px 70px;}
+.bib-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:12px;backdrop-filter:blur(8px);transition:all 0.25s;position:relative;overflow:hidden;}
+.bib-card::before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(125,214,59,0.05);top:-40px;right:-40px;pointer-events:none;}
+.bib-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(0,0,0,0.3);border-color:rgba(125,214,59,0.35);}
+.bib-card[data-hidden="true"]{display:none !important;}
+.card-icon{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0d3fa6,#1a6aff);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.card-tag{display:inline-block;padding:4px 14px;background:rgba(125,214,59,0.15);color:#7dd63b;border:1px solid rgba(125,214,59,0.25);border-radius:20px;font-size:11px;font-weight:700;align-self:flex-start;text-transform:uppercase;}
+.card-title{font-size:17px;font-weight:800;}
+.card-desc{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;flex:1;}
+.card-meta{font-size:11px;color:rgba(255,255,255,0.3);}
+.card-actions{display:flex;gap:8px;margin-top:4px;}
+.btn-leer{flex:1;background:#7dd63b;color:#0d2060;border:none;border-radius:20px;padding:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Poppins',sans-serif;transition:background 0.2s;}
+.btn-leer:hover{background:#8fe84e;}
+.btn-dl{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:10px 14px;font-size:13px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:5px;transition:background 0.2s;white-space:nowrap;}
+.btn-dl:hover{background:rgba(255,255,255,0.2);}
+
+.no-results{text-align:center;padding:50px 20px;display:none;}
+.no-results.show{display:block;}
+
+.fab{position:fixed;bottom:28px;right:28px;background:#7dd63b;color:#0d2060;border:none;border-radius:50%;width:56px;height:56px;font-size:26px;line-height:56px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:20;transition:transform 0.2s;}
+.fab:hover{transform:scale(1.1);}
+
+.up-ov{display:none;position:fixed;inset:0;background:rgba(5,15,50,0.78);z-index:200;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px);}
+.up-ov.open{display:flex;}
+.up-box{background:white;border-radius:28px;width:100%;max-width:500px;padding:32px;color:#0d2060;position:relative;max-height:92vh;overflow-y:auto;}
+.up-close{position:absolute;top:16px;right:18px;background:#f0f0f0;border:none;border-radius:50%;width:30px;height:30px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;}
+.up-close:hover{background:#e0e0e0;}
+.up-box h3{font-size:20px;font-weight:800;margin-bottom:4px;}
+.up-sub{font-size:13px;color:#888;margin-bottom:20px;}
+.up-f{margin-bottom:14px;}
+.up-f label{display:block;font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.up-f input,.up-f textarea,.up-f select{width:100%;padding:12px 16px;border:1.5px solid #dde3f0;border-radius:14px;font-size:14px;font-family:'Poppins',sans-serif;outline:none;background:#f8faff;color:#0d2060;resize:vertical;}
+.up-f input:focus,.up-f textarea:focus,.up-f select:focus{border-color:#0039a6;background:white;}
+.drop-z{border:2.5px dashed #c8d4f0;border-radius:18px;padding:28px 20px;text-align:center;background:#f5f8ff;cursor:pointer;transition:all 0.2s;margin-bottom:14px;}
+.drop-z:hover,.drop-z.over{border-color:#0039a6;background:#eef2ff;}
+.dz-ico{font-size:30px;margin-bottom:8px;}
+.drop-z p{font-size:13px;color:#888;margin-bottom:4px;}
+.drop-z small{font-size:11px;color:#aaa;}
+.dz-nm{font-size:12px;font-weight:700;color:#0039a6;margin-top:8px;word-break:break-all;}
+.up-prog{height:5px;background:#e8ecf8;border-radius:4px;overflow:hidden;margin-bottom:14px;display:none;}
+.up-prog.show{display:block;}
+.up-prog-bar{height:100%;background:#0039a6;border-radius:4px;width:0;transition:width 0.4s;}
+.up-btn{width:100%;background:#0d2f6e;color:white;border:none;border-radius:16px;padding:14px;font-weight:700;font-size:15px;cursor:pointer;font-family:'Poppins',sans-serif;transition:background 0.2s;}
+.up-btn:hover{background:#1a3bbf;}
+.up-btn:disabled{opacity:0.6;cursor:default;}
+
+.det-ov{display:none;position:fixed;inset:0;background:rgba(5,15,50,0.78);z-index:200;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px);}
+.det-ov.open{display:flex;}
+.det-box{background:white;border-radius:28px;width:100%;max-width:480px;padding:32px;color:#0d2060;position:relative;max-height:90vh;overflow-y:auto;}
+.det-close{position:absolute;top:16px;right:18px;background:#f0f0f0;border:none;border-radius:50%;width:30px;height:30px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;}
+.det-tag{display:inline-block;padding:4px 14px;background:#e8f5e9;color:#1b5e20;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:14px;}
+.det-title{font-size:20px;font-weight:800;margin-bottom:12px;}
+.det-desc{font-size:14px;color:#555;line-height:1.7;margin-bottom:18px;}
+.det-dl{display:inline-flex;align-items:center;gap:8px;background:#0d2f6e;color:white;text-decoration:none;border-radius:14px;padding:11px 22px;font-size:13px;font-weight:700;}
+.det-dl:hover{background:#1a3bbf;}
+
+#bib-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0d2f6e;color:white;padding:12px 26px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;font-family:'Poppins',sans-serif;}
+
+@media(max-width:700px){
+  .navbar{padding:14px 18px;}
+  .hero{padding:30px 18px 16px;}
+  .search-wrap,.search-count,.sec-t{margin-left:18px;margin-right:18px;}
+  .bib-grid{padding:0 18px 60px;}
+  .nav-links{display:none;}
 }
-
-body{
-    background:
-    radial-gradient(circle at top left,#2558ff 0%,transparent 30%),
-    radial-gradient(circle at bottom right,#1f9d7a 0%,transparent 25%),
-    linear-gradient(135deg,#07142e,#102b63,#173f9c);
-    min-height:100vh;
-    color:white;
-    overflow-x:hidden;
-}
-
-/* NAVBAR */
-
-.navbar{
-    width:100%;
-    padding:20px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    backdrop-filter:blur(10px);
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    font-size:28px;
-    font-weight:bold;
-}
-
-.logo i{
-    color:#67ffb3;
-}
-
-.menu{
-    display:flex;
-    gap:20px;
-}
-
-.menu a{
-    color:white;
-    text-decoration:none;
-    opacity:.8;
-    transition:.3s;
-}
-
-.menu a:hover{
-    opacity:1;
-    color:#67ffb3;
-}
-
-/* HERO */
-
-.hero{
-    padding:20px 40px 40px;
-}
-
-.hero h1{
-    font-size:45px;
-    margin-bottom:10px;
-}
-
-.hero p{
-    color:#cfd8ff;
-    max-width:700px;
-    line-height:1.6;
-}
-
-/* BUSCADOR */
-
-.search-box{
-    margin-top:30px;
-    background:rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:60px;
-    padding:10px;
-    display:flex;
-    align-items:center;
-    backdrop-filter:blur(10px);
-}
-
-.search-box input{
-    flex:1;
-    border:none;
-    background:transparent;
-    padding:15px;
-    color:white;
-    font-size:17px;
-    outline:none;
-}
-
-.search-box input::placeholder{
-    color:#d7dfff;
-}
-
-.search-btn{
-    background:linear-gradient(135deg,#00d084,#009dff);
-    border:none;
-    color:white;
-    padding:15px 28px;
-    border-radius:40px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.search-btn:hover{
-    transform:scale(1.05);
-}
-
-/* TARJETAS */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-    padding:40px;
-}
-
-.card{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:28px;
-    padding:25px;
-    backdrop-filter:blur(12px);
-    transition:.4s;
-    position:relative;
-    overflow:hidden;
-}
-
-.card::before{
-    content:'';
-    position:absolute;
-    width:200px;
-    height:200px;
-    background:rgba(0,255,170,0.08);
-    border-radius:50%;
-    top:-120px;
-    right:-80px;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 20px 40px rgba(0,0,0,.3);
-}
-
-.icon-circle{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#00b7ff,#3d5cff);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:25px;
-    margin-bottom:20px;
-}
-
-.tag{
-    display:inline-block;
-    padding:6px 14px;
-    background:rgba(103,255,179,.15);
-    color:#67ffb3;
-    border-radius:20px;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.card h3{
-    margin-bottom:10px;
-    font-size:24px;
-}
-
-.card p{
-    color:#d9e1ff;
-    line-height:1.6;
-    margin-bottom:20px;
-}
-
-.read-btn{
-    background:linear-gradient(135deg,#00c896,#005eff);
-    border:none;
-    color:white;
-    padding:12px 24px;
-    border-radius:30px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.read-btn:hover{
-    transform:scale(1.05);
-}
-
-/* BOTON SUBIR */
-
-.upload-section{
-    text-align:center;
-    padding:20px 40px 60px;
-}
-
-.upload-main-btn{
-    background:linear-gradient(135deg,#00d084,#005eff);
-    border:none;
-    color:white;
-    padding:18px 35px;
-    border-radius:50px;
-    font-size:17px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.upload-main-btn:hover{
-    transform:scale(1.05);
-}
-
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-    padding:20px;
-}
-
-.modal-content{
-    width:100%;
-    max-width:900px;
-    background:#ffffff;
-    border-radius:30px;
-    padding:30px;
-    animation:show .4s ease;
-    position:relative;
-}
-
-@keyframes show{
-    from{
-        transform:translateY(30px);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-.close{
-    position:absolute;
-    top:18px;
-    right:20px;
-    font-size:28px;
-    cursor:pointer;
-    color:#222;
-}
-
-.modal h2{
-    color:#123;
-    margin-bottom:20px;
-}
-
-.editor{
-    margin-bottom:25px;
-}
-
-/* DRAG DROP */
-
-.drop-area{
-    border:3px dashed #6fb8ff;
-    border-radius:25px;
-    padding:50px 20px;
-    text-align:center;
-    transition:.3s;
-    background:#f7fbff;
-}
-
-.drop-area.dragover{
-    background:#dff2ff;
-}
-
-.drop-area i{
-    font-size:45px;
-    color:#2b7fff;
-    margin-bottom:15px;
-}
-
-.drop-area p{
-    color:#555;
-    margin-bottom:20px;
-}
-
-.file-btn{
-    background:linear-gradient(135deg,#4cb8ff,#0078ff);
-    color:white;
-    border:none;
-    padding:14px 25px;
-    border-radius:30px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.file-list{
-    margin-top:20px;
-    color:#333;
-    text-align:left;
-}
-
-.save-btn{
-    margin-top:25px;
-    width:100%;
-    background:linear-gradient(135deg,#00c896,#006dff);
-    color:white;
-    border:none;
-    padding:18px;
-    border-radius:20px;
-    font-size:16px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-    .navbar{
-        flex-direction:column;
-        gap:15px;
-    }
-
-    .hero h1{
-        font-size:34px;
-    }
-
-    .search-box{
-        flex-direction:column;
-        gap:10px;
-        border-radius:25px;
-    }
-
-    .search-btn{
-        width:100%;
-    }
-
-}
-
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-
 <nav class="navbar">
-
-    <div class="logo" onclick="window.location='/Nexovoz/pages/indexadmid.php'" style="cursor:pointer;">
-        <i class="fa-solid fa-wave-square"></i>
-        Biblioteca NEXOVOZ
-    </div>
-
-    <div class="menu">
-        <a href="/Nexovoz/pages/indexadmid.php">Inicio</a>
-        <a href="/Nexovoz/pages/bibliotecafono.html" style="opacity:1;color:#67ffb3;">Biblioteca</a>
-        <a href="/Nexovoz/pages/ejerciosfono.html">Ejercicios</a>
-        <a href="/Nexovoz/pages/agendar_cita_fonoaudiologia.html">Apoyo</a>
-    </div>
-
+  <a href="/Nexovoz/pages/indexadmid.php" class="nav-logo" title="NEXOVOZ">
+    <img src="../assets/img/logo.png" alt="NEXOVOZ" onerror="this.style.display='none'">
+  </a>
+  <div class="nav-links">
+    <a href="/Nexovoz/pages/indexadmid.php">Inicio</a>
+    <a href="/Nexovoz/pages/bibliotecafono.html" class="active">Biblioteca</a>
+    <a href="/Nexovoz/pages/ejerciosfono.html">Ejercicios</a>
+    <a href="/Nexovoz/pages/agendar_cita_fonoaudiologia.html">Apoyo</a>
+  </div>
+  <button class="nav-up-btn" onclick="abrirUpload()">+ Subir recurso</button>
 </nav>
 
-<!-- HERO -->
-
 <section class="hero">
-
-    <h1>Comunicación accesible y apoyo terapéutico</h1>
-
-    <p>
-        Plataforma moderna enfocada en personas con dificultades del habla,
-        lenguaje y comunicación. Recursos terapéuticos, herramientas digitales
-        y acompañamiento humano en un entorno accesible y profesional.
-    </p>
-
-    <!-- BUSCADOR -->
-
-    <div class="search-box">
-
-        <input type="text" placeholder="Buscar dificultad del lenguaje, terapia, recurso..." />
-
-        <button class="search-btn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Buscar
-        </button>
-
-    </div>
-
+  <div class="hero-tag">BIBLIOTECA TERAPEUTICA</div>
+  <h1>Recursos de apoyo profesional</h1>
+  <p>Materiales terapeuticos, guias clinicas y recursos digitales para fonoaudiologos. Sube, busca y comparte.</p>
 </section>
 
-<!-- TARJETAS -->
+<div class="search-wrap">
+  <input type="text" id="bib-search" placeholder="Buscar por titulo, categoria o descripcion..." oninput="filtrar(this.value)">
+</div>
+<div class="search-count" id="search-count"></div>
 
-<section class="cards">
+<div class="sec-t">Recursos disponibles</div>
 
-    <div class="card">
+<div class="bib-grid" id="bib-grid">
 
-        <div class="icon-circle">
-            <i class="fa-solid fa-comment-medical"></i>
-        </div>
-
-        <span class="tag">Fluidez</span>
-
-        <h3>Tartamudez</h3>
-
-        <p>
-            Trastorno de la fluidez del habla caracterizado por repeticiones,
-            bloqueos y prolongaciones involuntarias.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="tartamudez fluidez habla bloqueo repeticion">
+    <div class="card-icon">&#128172;</div>
+    <span class="card-tag">Fluidez</span>
+    <div class="card-title">Tartamudez</div>
+    <div class="card-desc">Trastorno de la fluidez del habla caracterizado por repeticiones, bloqueos y prolongaciones involuntarias.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Fluidez','Tartamudez','Trastorno de la fluidez del habla caracterizado por repeticiones, bloqueos y prolongaciones involuntarias. Se trabaja con tecnicas de fluencia controlada, relajacion y modificacion del tartamudeo.','')">Leer mas</button>
     </div>
+  </div>
 
-    <div class="card">
-
-        <div class="icon-circle">
-            <i class="fa-solid fa-book-open-reader"></i>
-        </div>
-
-        <span class="tag">Lectura</span>
-
-        <h3>Dislexia</h3>
-
-        <p>
-            Dificultad específica del aprendizaje relacionada con la lectura,
-            escritura y reconocimiento de palabras.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="dislexia lectura escritura palabras aprendizaje">
+    <div class="card-icon">&#128218;</div>
+    <span class="card-tag">Lectura</span>
+    <div class="card-title">Dislexia</div>
+    <div class="card-desc">Dificultad especifica del aprendizaje relacionada con la lectura, escritura y reconocimiento de palabras.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Lectura','Dislexia','Dificultad especifica del aprendizaje relacionada con la lectura, escritura y reconocimiento de palabras. Se trabaja con metodos multisensoriales, lectura guiada y apoyo fonologico.','')">Leer mas</button>
     </div>
+  </div>
 
-    <div class="card">
-
-        <div class="icon-circle">
-            <i class="fa-solid fa-brain"></i>
-        </div>
-
-        <span class="tag">Neurología</span>
-
-        <h3>Afasia</h3>
-
-        <p>
-            Alteración del lenguaje causada por daño cerebral que afecta
-            comprensión, lectura y comunicación verbal.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="afasia neurologia cerebro lenguaje comprension">
+    <div class="card-icon">&#129504;</div>
+    <span class="card-tag">Neurologia</span>
+    <div class="card-title">Afasia</div>
+    <div class="card-desc">Alteracion del lenguaje causada por dano cerebral que afecta comprension, lectura y comunicacion verbal.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Neurologia','Afasia','Alteracion del lenguaje causada por dano cerebral que afecta comprension, lectura y comunicacion verbal. La rehabilitacion incluye terapia del lenguaje intensiva y comunicacion aumentativa.','')">Leer mas</button>
     </div>
+  </div>
 
-    <div class="card">
-
-        <div class="icon-circle">
-            <i class="fa-solid fa-child"></i>
-        </div>
-
-        <span class="tag">Desarrollo</span>
-
-        <h3>Retraso del lenguaje</h3>
-
-        <p>
-            Desarrollo más lento de habilidades lingüísticas comparado con otros
-            niños de la misma edad.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="retraso lenguaje desarrollo ninos edad">
+    <div class="card-icon">&#128100;</div>
+    <span class="card-tag">Desarrollo</span>
+    <div class="card-title">Retraso del lenguaje</div>
+    <div class="card-desc">Desarrollo mas lento de habilidades linguisticas comparado con otros ninos de la misma edad.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Desarrollo','Retraso del lenguaje','Desarrollo mas lento de habilidades linguisticas. La intervencion temprana es clave para mejorar el pronostico del paciente.','')">Leer mas</button>
     </div>
+  </div>
 
-    <div class="card">
-
-        <div class="icon-circle">
-            <i class="fa-solid fa-ear-listen"></i>
-        </div>
-
-        <span class="tag">Ansiedad</span>
-
-        <h3>Mutismo selectivo</h3>
-
-        <p>
-            Dificultad para hablar en situaciones sociales específicas,
-            generalmente relacionada con ansiedad.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="mutismo selectivo ansiedad social habla silencio">
+    <div class="card-icon">&#128263;</div>
+    <span class="card-tag">Ansiedad</span>
+    <div class="card-title">Mutismo selectivo</div>
+    <div class="card-desc">Dificultad para hablar en situaciones sociales especificas, generalmente relacionada con ansiedad.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Ansiedad','Mutismo selectivo','Dificultad para hablar en situaciones sociales especificas, generalmente relacionada con ansiedad. El tratamiento involucra terapia cognitivo-conductual y exposicion gradual.','')">Leer mas</button>
     </div>
+  </div>
 
-    <div class="card">
-
-        <div class="icon-circle">
-            <i class="fa-solid fa-microphone-lines"></i>
-        </div>
-
-        <span class="tag">Comunicación</span>
-
-        <h3>Trastornos del lenguaje</h3>
-
-        <p>
-            Alteraciones que afectan la comprensión, expresión y uso adecuado
-            del lenguaje oral y escrito.
-        </p>
-
-        <button class="read-btn">Leer más</button>
-
+  <div class="bib-card" data-keywords="trastorno lenguaje comunicacion oral escrito expresion">
+    <div class="card-icon">&#127908;</div>
+    <span class="card-tag">Comunicacion</span>
+    <div class="card-title">Trastornos del lenguaje</div>
+    <div class="card-desc">Alteraciones que afectan la comprension, expresion y uso adecuado del lenguaje oral y escrito.</div>
+    <div class="card-actions">
+      <button class="btn-leer" onclick="abrirDetalle('Comunicacion','Trastornos del lenguaje','Alteraciones que afectan la comprension, expresion y uso adecuado del lenguaje oral y escrito. Se trabaja con planes individualizados de intervencion linguistica.','')">Leer mas</button>
     </div>
-
-</section>
-
-<!-- SUBIR -->
-
-<section class="upload-section">
-
-    <button class="upload-main-btn" onclick="openModal()">
-        <i class="fa-solid fa-cloud-arrow-up"></i>
-        Subir recurso terapéutico
-    </button>
-
-</section>
-
-<!-- MODAL -->
-
-<div class="modal" id="uploadModal">
-
-    <div class="modal-content">
-
-        <span class="close" onclick="closeModal()">&times;</span>
-
-        <h2>Subir archivo terapéutico</h2>
-
-        <!-- EDITOR -->
-
-        <div class="editor">
-            <textarea id="editor"></textarea>
-        </div>
-
-        <!-- DRAG DROP -->
-
-        <div class="drop-area" id="dropArea">
-
-            <i class="fa-solid fa-file-arrow-up"></i>
-
-            <p>
-                Arrastra aquí archivos PDF, DOCX, audios o imágenes
-            </p>
-
-            <button class="file-btn">
-                Examinar archivos
-            </button>
-
-            <input type="file" id="fileInput" hidden multiple
-            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.mp3,.wav"/>
-
-            <div class="file-list" id="fileList"></div>
-
-        </div>
-
-        <button class="save-btn">
-            Guardar recurso
-        </button>
-
-    </div>
+  </div>
 
 </div>
 
+<div class="no-results" id="no-results">
+  <div style="font-size:40px;margin-bottom:10px;">&#128269;</div>
+  <p style="color:rgba(255,255,255,0.5);">No se encontraron recursos con ese termino.</p>
+</div>
+
+<button class="fab" onclick="abrirUpload()" title="Subir recurso">+</button>
+
+<!-- UPLOAD MODAL -->
+<div class="up-ov" id="upOv" onclick="cerrarFueraUp(event)">
+  <div class="up-box">
+    <button class="up-close" onclick="cerrarUpload()">&#x2715;</button>
+    <h3>Subir recurso terapeutico</h3>
+    <p class="up-sub">Comparte materiales con otros fonoaudiologos</p>
+
+    <div class="up-f">
+      <label>Titulo *</label>
+      <input type="text" id="up-titulo" placeholder="Ej: Guia de tratamiento para dislalia">
+    </div>
+    <div class="up-f">
+      <label>Categoria</label>
+      <select id="up-cat">
+        <option value="">-- Selecciona --</option>
+        <option>Fluidez</option><option>Lectura</option><option>Neurologia</option>
+        <option>Desarrollo</option><option>Ansiedad</option><option>Comunicacion</option>
+        <option>Articulacion</option><option>Voz</option><option>Deglucion</option><option>Otro</option>
+      </select>
+    </div>
+    <div class="up-f">
+      <label>Descripcion</label>
+      <textarea id="up-desc" rows="3" placeholder="Describe el contenido del recurso..."></textarea>
+    </div>
+
+    <div class="drop-z" id="upDZ" onclick="document.getElementById('up-file').click()">
+      <div class="dz-ico">&#128196;</div>
+      <p>Arrastra un archivo o haz clic para seleccionar</p>
+      <small>PDF, DOCX, PPTX, MP3, MP4, PNG, JPG — Max 20 MB</small>
+      <div class="dz-nm" id="dz-nm"></div>
+    </div>
+    <input type="file" id="up-file" style="display:none" accept=".pdf,.doc,.docx,.pptx,.png,.jpg,.jpeg,.mp3,.wav,.mp4" onchange="onFileChange(this)">
+
+    <div class="up-prog" id="upProg"><div class="up-prog-bar" id="upBar"></div></div>
+    <button class="up-btn" id="upSubmit" onclick="guardarRecurso()">Guardar recurso</button>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="det-ov" id="detOv" onclick="cerrarFueraDet(event)">
+  <div class="det-box">
+    <button class="det-close" onclick="cerrarDetalle()">&#x2715;</button>
+    <span class="det-tag" id="det-tag"></span>
+    <div class="det-title" id="det-title"></div>
+    <div class="det-desc" id="det-desc"></div>
+    <div id="det-file"></div>
+  </div>
+</div>
+
+<div id="bib-toast"></div>
+
 <script>
-
-/* CKEDITOR */
-
-CKEDITOR.replace('editor');
-
-/* MODAL */
-
-const modal = document.getElementById("uploadModal");
-
-function openModal(){
-    modal.style.display = "flex";
+/* ── SEARCH ── */
+function filtrar(q) {
+  var cards = document.querySelectorAll('.bib-card');
+  var term = q.toLowerCase().trim();
+  var visible = 0;
+  cards.forEach(function(c) {
+    var kw  = (c.dataset.keywords || '').toLowerCase();
+    var txt = c.textContent.toLowerCase();
+    var match = !term || kw.includes(term) || txt.includes(term);
+    c.dataset.hidden = match ? 'false' : 'true';
+    if (match) visible++;
+  });
+  var cnt  = document.getElementById('search-count');
+  var nores = document.getElementById('no-results');
+  cnt.textContent = term ? visible + ' recurso(s) encontrado(s) para "' + q + '"' : '';
+  nores.classList.toggle('show', visible === 0 && term !== '');
 }
 
-function closeModal(){
-    modal.style.display = "none";
-}
+/* ── UPLOAD MODAL ── */
+function abrirUpload()   { document.getElementById('upOv').classList.add('open'); }
+function cerrarUpload()  { document.getElementById('upOv').classList.remove('open'); }
+function cerrarFueraUp(e){ if (e.target === document.getElementById('upOv')) cerrarUpload(); }
 
-/* CERRAR AL DAR AFUERA */
-
-window.onclick = function(e){
-    if(e.target == modal){
-        closeModal();
-    }
-}
-
-/* DRAG DROP */
-
-const dropArea = document.getElementById("dropArea");
-const fileInput = document.getElementById("fileInput");
-const fileList = document.getElementById("fileList");
-const fileBtn = document.querySelector(".file-btn");
-
-fileBtn.addEventListener("click", () => {
-    fileInput.click();
+var upDZ = document.getElementById('upDZ');
+upDZ.addEventListener('dragover',  function(e){ e.preventDefault(); upDZ.classList.add('over'); });
+upDZ.addEventListener('dragleave', function()  { upDZ.classList.remove('over'); });
+upDZ.addEventListener('drop', function(e) {
+  e.preventDefault(); upDZ.classList.remove('over');
+  var f = e.dataTransfer.files[0]; if (f) setFile(f);
 });
 
-fileInput.addEventListener("change", showFiles);
+function onFileChange(inp) { if (inp.files[0]) setFile(inp.files[0]); }
 
-dropArea.addEventListener("dragover", (e)=>{
-    e.preventDefault();
-    dropArea.classList.add("dragover");
-});
-
-dropArea.addEventListener("dragleave", ()=>{
-    dropArea.classList.remove("dragover");
-});
-
-dropArea.addEventListener("drop", (e)=>{
-    e.preventDefault();
-
-    dropArea.classList.remove("dragover");
-
-    const files = e.dataTransfer.files;
-
-    displayFiles(files);
-});
-
-function showFiles(){
-    displayFiles(fileInput.files);
+var _file = null;
+function setFile(f) {
+  _file = f;
+  document.getElementById('dz-nm').textContent = '\uD83D\uDCCE ' + f.name + ' (' + (f.size/1024/1024).toFixed(2) + ' MB)';
 }
 
-function displayFiles(files){
+function guardarRecurso() {
+  var titulo = document.getElementById('up-titulo').value.trim();
+  if (!titulo) { alert('El titulo es obligatorio'); return; }
+  var fd = new FormData();
+  fd.append('titulo',      titulo);
+  fd.append('descripcion', document.getElementById('up-desc').value.trim());
+  fd.append('categoria',   document.getElementById('up-cat').value);
+  if (_file) fd.append('archivo', _file);
 
-    fileList.innerHTML = "";
+  var btn  = document.getElementById('upSubmit');
+  var prog = document.getElementById('upProg');
+  var bar  = document.getElementById('upBar');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  prog.classList.add('show'); bar.style.width = '40%';
 
-    [...files].forEach(file=>{
-
-        let div = document.createElement("div");
-
-        div.style.marginTop = "10px";
-
-        div.innerHTML = `
-            <i class="fa-solid fa-file"></i>
-            ${file.name}
-        `;
-
-        fileList.appendChild(div);
-
-    });
-
+  fetch('../backend/biblioteca.php', { method:'POST', body: fd })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      bar.style.width = '100%';
+      setTimeout(function(){
+        prog.classList.remove('show'); bar.style.width = '0';
+        if (d.ok) {
+          cerrarUpload();
+          resetUpload();
+          agregarCard(d);
+          toast('Recurso guardado correctamente');
+        } else {
+          alert(d.msg || 'Error al guardar');
+        }
+      }, 350);
+    })
+    .catch(function(){ alert('Error de conexion'); })
+    .finally(function(){ btn.disabled = false; btn.textContent = 'Guardar recurso'; });
 }
 
+function resetUpload() {
+  document.getElementById('up-titulo').value = '';
+  document.getElementById('up-desc').value   = '';
+  document.getElementById('up-cat').value    = '';
+  document.getElementById('dz-nm').textContent = '';
+  document.getElementById('up-file').value   = '';
+  _file = null;
+}
+
+/* ── DETAIL MODAL ── */
+function abrirDetalle(tag, titulo, desc, archivo) {
+  document.getElementById('det-tag').textContent   = tag;
+  document.getElementById('det-title').textContent = titulo;
+  document.getElementById('det-desc').textContent  = desc;
+  var fw = document.getElementById('det-file');
+  fw.innerHTML = archivo
+    ? '<a href="' + archivo + '" target="_blank" class="det-dl">&#128196; Descargar archivo</a>'
+    : '';
+  document.getElementById('detOv').classList.add('open');
+}
+function cerrarDetalle()   { document.getElementById('detOv').classList.remove('open'); }
+function cerrarFueraDet(e) { if (e.target === document.getElementById('detOv')) cerrarDetalle(); }
+
+/* ── DYNAMIC CARD ── */
+var iconos = {Fluidez:'&#128172;',Lectura:'&#128218;',Neurologia:'&#129504;',Desarrollo:'&#128100;',Ansiedad:'&#128263;',Comunicacion:'&#127908;',Articulacion:'&#128483;',Voz:'&#127925;',Deglucion:'&#129755;',Otro:'&#128196;'};
+
+function agregarCard(d) {
+  var grid = document.getElementById('bib-grid');
+  var icon = iconos[d.categoria] || '&#128196;';
+  var card = document.createElement('div');
+  card.className = 'bib-card';
+  card.dataset.keywords = ((d.titulo||'') + ' ' + (d.categoria||'') + ' ' + (d.descripcion||'')).toLowerCase();
+  card.innerHTML =
+    '<div class="card-icon">' + icon + '</div>' +
+    '<span class="card-tag">' + (d.categoria||'Recurso') + '</span>' +
+    '<div class="card-title">' + d.titulo + '</div>' +
+    '<div class="card-desc">' + (d.descripcion||'') + '</div>' +
+    '<div class="card-meta">Recien subido</div>' +
+    '<div class="card-actions">' +
+      '<button class="btn-leer" onclick="abrirDetalle(\'' + (d.categoria||'') + '\',\'' + d.titulo.replace(/'/g,"\\'") + '\',\'' + (d.descripcion||'').replace(/'/g,"\\'") + '\',\'' + (d.archivo||'') + '\')">Leer mas</button>' +
+      (d.archivo ? '<a href="' + d.archivo + '" target="_blank" class="btn-dl">&#128196;</a>' : '') +
+    '</div>';
+  grid.prepend(card);
+}
+
+/* ── LOAD FROM DB ── */
+function cargarDB() {
+  fetch('../backend/mostrar_biblioteca.php')
+    .then(function(r){ return r.json(); })
+    .then(function(items){
+      if (!Array.isArray(items)) return;
+      items.forEach(function(d) {
+        var icon = iconos[d.categoria] || '&#128196;';
+        var card = document.createElement('div');
+        card.className = 'bib-card';
+        card.dataset.keywords = ((d.titulo||'') + ' ' + (d.categoria||'') + ' ' + (d.descripcion||'')).toLowerCase();
+        var fecha = d.fecha ? new Date(d.fecha).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'}) : '';
+        card.innerHTML =
+          '<div class="card-icon">' + icon + '</div>' +
+          '<span class="card-tag">' + (d.categoria||'Recurso') + '</span>' +
+          '<div class="card-title">' + d.titulo + '</div>' +
+          '<div class="card-desc">' + (d.descripcion||'') + '</div>' +
+          (fecha ? '<div class="card-meta">' + fecha + '</div>' : '') +
+          '<div class="card-actions">' +
+            '<button class="btn-leer" onclick="abrirDetalle(\'' + (d.categoria||'') + '\',\'' + d.titulo.replace(/'/g,"\\'") + '\',\'' + (d.descripcion||'').replace(/'/g,"\\'") + '\',\'' + (d.archivo||'') + '\')">Leer mas</button>' +
+            (d.archivo ? '<a href="' + d.archivo + '" target="_blank" class="btn-dl">&#128196; Archivo</a>' : '') +
+          '</div>';
+        document.getElementById('bib-grid').appendChild(card);
+      });
+    }).catch(function(){});
+}
+
+/* ── TOAST ── */
+function toast(msg) {
+  var t = document.getElementById('bib-toast');
+  t.textContent = msg; t.style.opacity = '1';
+  setTimeout(function(){ t.style.opacity = '0'; }, 2800);
+}
+
+cargarDB();
 </script>
-
 </body>
 </html>

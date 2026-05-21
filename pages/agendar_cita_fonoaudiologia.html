@@ -559,9 +559,9 @@ body {
 
         <div class="conf-top">
             <button class="conf-close" onclick="closeModal()" aria-label="Cerrar">&#x2715;</button>
-            <div class="conf-check">&#10003;</div>
-            <h2>Cita confirmada</h2>
-            <p>Tu reserva ha sido registrada exitosamente</p>
+            <div class="conf-check" id="conf-check-icon">&#128197;</div>
+            <h2 id="conf-heading">Confirmar reserva</h2>
+            <p id="conf-subheading">Revisa los detalles antes de confirmar</p>
         </div>
 
         <div class="conf-body">
@@ -588,7 +588,7 @@ body {
         </div>
 
         <div class="conf-footer">
-            <button class="conf-btn" id="btnConfirmar" onclick="confirmarCita()">Confirmar cita</button>
+            <button class="conf-btn" id="btnConfirmar" onclick="confirmarCita()">&#128197; Confirmar cita</button>
         </div>
 
     </div>
@@ -712,15 +712,42 @@ function confirmarCita() {
     fetch('../backend/guardar_cita.php', { method:'POST', body: fd })
         .then(function(r){ return r.json(); })
         .then(function(d){
-            closeModal();
             if (d.ok) {
-                showExito('Cita agendada correctamente');
+                mostrarEstadoExito();
             } else {
+                btn.disabled = false; btn.innerHTML = '&#128197; Confirmar cita';
                 showError(d.msg || 'No se pudo guardar la cita');
             }
         })
-        .catch(function(){ closeModal(); showError('Error de conexion'); })
-        .finally(function(){ btn.disabled = false; btn.textContent = 'Confirmar cita'; });
+        .catch(function(){
+            btn.disabled = false; btn.innerHTML = '&#128197; Confirmar cita';
+            showError('Error de conexion');
+        });
+}
+
+function mostrarEstadoExito() {
+    document.getElementById('conf-check-icon').textContent = '\u2713';
+    document.getElementById('conf-check-icon').style.background = '#b6ff00';
+    document.getElementById('conf-check-icon').style.color = '#0d2060';
+    document.getElementById('conf-heading').textContent = '\u00a1Cita confirmada!';
+    document.getElementById('conf-subheading').textContent = 'Tu reserva ha sido registrada exitosamente';
+    var btn = document.getElementById('btnConfirmar');
+    btn.disabled = false;
+    btn.textContent = 'Entendido';
+    btn.style.background = '#27ae60';
+    btn.onclick = function() { closeModal(); resetModalEstado(); };
+}
+
+function resetModalEstado() {
+    document.getElementById('conf-check-icon').textContent = '\ud83d\udcc5';
+    document.getElementById('conf-check-icon').style.background = '';
+    document.getElementById('conf-check-icon').style.color = '';
+    document.getElementById('conf-heading').textContent = 'Confirmar reserva';
+    document.getElementById('conf-subheading').textContent = 'Revisa los detalles antes de confirmar';
+    var btn = document.getElementById('btnConfirmar');
+    btn.innerHTML = '&#128197; Confirmar cita';
+    btn.style.background = '';
+    btn.onclick = confirmarCita;
 }
 
 function showExito(msg) {
