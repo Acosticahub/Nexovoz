@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexovoz</title>
+<title>NEXOVOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #0d2f6e;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(140deg, #071a4e 0%, #0d2f6e 45%, #0a3d1f 100%);
   min-height: 100vh;
   overflow-x: hidden;
+  color: white;
 }
 
 /* ── NAVBAR ── */
@@ -19,398 +22,376 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 16px 36px;
+  background: rgba(0,0,0,0.18);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 20;
 }
 
-.logo-box {
-  width: 52px; height: 52px;
+.nav-logo {
+  width: 50px; height: 50px;
   border-radius: 50%;
-  border: 3px solid #7dd63b;
+  border: 2.5px solid #7dd63b;
   overflow: hidden;
-  background: #fff;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+}
+.nav-logo img { width: 100%; height: 100%; object-fit: cover; }
+.nav-logo-txt {
+  font-size: 10px; font-weight: 800;
+  color: #0d2060; text-align: center; line-height: 1.2;
+}
+
+.nav-right { display: flex; align-items: center; gap: 10px; }
+
+.user-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.35);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
+.user-avatar:hover { background: rgba(255,255,255,0.28); transform: scale(1.08); }
+.user-avatar svg { width: 22px; height: 22px; }
 
-.logo-box img { width: 100%; height: 100%; object-fit: cover; }
-
-.logo-placeholder {
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, #1a6fd4, #7dd63b);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700; color: #fff; text-align: center;
-  line-height: 1.2;
+.btn-logout {
+  background: #c0392b; color: white; border: none;
+  border-radius: 30px; padding: 9px 18px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  text-decoration: none; font-family: 'Poppins', sans-serif;
+  transition: background 0.2s;
 }
+.btn-logout:hover { background: #a93226; }
 
-.user-btn {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  background: #fff;
-  border: 3px solid #7dd63b;
-  cursor: pointer;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 0.15s;
+/* ── DROPDOWN ── */
+.user-dd {
+  position: fixed; top: 76px; right: 36px;
+  background: white; border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.28);
+  padding: 16px; min-width: 200px;
+  display: none; z-index: 50; color: #0d2060;
 }
+.user-dd.open { display: block; }
+.user-dd .dd-name { font-weight: 700; font-size: 14px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+.user-dd a { display: block; padding: 8px 12px; border-radius: 8px; text-decoration: none; color: #0d2060; font-size: 13px; font-weight: 600; transition: background 0.15s; }
+.user-dd a:hover { background: #f0f4ff; }
+.user-dd .dd-logout { color: #c0392b; }
 
-.user-btn:hover { transform: scale(1.08); }
-
-.user-btn svg { width: 26px; height: 26px; }
-
-/* ── TÍTULO ── */
+/* ── HERO ── */
 .hero {
   text-align: center;
-  padding: 0 20px 30px;
+  padding: 36px 20px 28px;
 }
-
-.title-box {
+.greeting-tag {
   display: inline-block;
-  background: #5bc8f5;
-  border-radius: 30px;
-  padding: 10px 48px;
-  font-size: 36px;
-  font-weight: 800;
-  color: #0d2f6e;
-  letter-spacing: 0.02em;
-  margin-top: 4px;
+  background: #7dd63b; color: #0d2060;
+  border-radius: 30px; padding: 6px 22px;
+  font-size: 13px; font-weight: 700; margin-bottom: 14px;
 }
+.hero h1 { font-size: 38px; font-weight: 800; }
+.hero h1 span { color: #7dd63b; }
+.hero p { color: rgba(255,255,255,0.65); font-size: 14px; margin-top: 6px; }
 
-/* ── GRID DE BOTONES ── */
-.grid {
+/* ── CARDS GRID ── */
+.cards-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  padding: 0 32px 40px;
-  max-width: 720px;
+  padding: 0 36px 56px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* Globo de diálogo */
-.bubble {
-  background: #7dd63b;
-  border-radius: 22px;
-  padding: 18px 14px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+@media (max-width: 720px) {
+  .cards-grid { grid-template-columns: 1fr 1fr; padding: 0 18px 40px; gap: 12px; }
+  .navbar { padding: 14px 18px; }
+  .hero h1 { font-size: 28px; }
+  .user-dd { right: 18px; }
+}
+@media (max-width: 400px) { .cards-grid { grid-template-columns: 1fr; } }
+
+.module-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+  padding: 24px 20px 20px;
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 10px;
+  text-decoration: none; color: white;
   cursor: pointer;
-  position: relative;
-  transition: transform 0.15s, background 0.15s;
-  min-height: 82px;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+  position: relative; overflow: hidden;
 }
-
-.bubble::after {
+.module-card::before {
   content: '';
-  position: absolute;
-  bottom: -14px;
-  left: 22px;
-  width: 0; height: 0;
-  border-left: 12px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 16px solid #7dd63b;
+  position: absolute; width: 100px; height: 100px;
+  border-radius: 50%; background: rgba(125,214,59,0.07);
+  top: -40px; right: -30px;
 }
-
-.bubble:hover { transform: translateY(-4px); background: #6bc82e; }
-.bubble:hover::after { border-top-color: #6bc82e; }
-
-.bubble-icon {
-  font-size: 32px;
-  flex-shrink: 0;
-  line-height: 1;
+.module-card:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+  border-color: rgba(125,214,59,0.45);
 }
-
-.bubble-label {
-  font-size: 16px;
-  font-weight: 700;
-  color: #0d2f6e;
-  line-height: 1.25;
+.card-icon { font-size: 38px; line-height: 1; }
+.card-title { font-size: 16px; font-weight: 700; }
+.card-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+.card-arrow {
+  margin-top: auto;
+  background: #7dd63b; color: #0d2060;
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 700;
 }
+.module-card:hover .card-arrow { background: #8fe84e; }
 
-/* ── MODAL OVERLAY ── */
+/* ── MODAL PERFIL ── */
 .overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 20, 60, 0.55);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
+  display: none; position: fixed; inset: 0;
+  background: rgba(5,20,60,0.65); z-index: 100;
+  align-items: center; justify-content: center; padding: 20px;
+  backdrop-filter: blur(4px);
 }
-
 .overlay.open { display: flex; }
 
-/* ── MODAL ── */
 .modal {
-  background: #7dd63b;
-  border-radius: 28px;
-  padding: 28px 28px 30px;
-  width: 92%;
-  max-width: 420px;
-  position: relative;
-  animation: popIn 0.22s ease;
+  background: #7dd63b; border-radius: 28px;
+  padding: 28px 28px 30px; width: 100%; max-width: 420px;
+  position: relative; animation: popIn 0.22s ease; color: #0d2060;
 }
-
 @keyframes popIn {
   from { transform: scale(0.88); opacity: 0; }
   to   { transform: scale(1);    opacity: 1; }
 }
-
 .modal-close {
-  position: absolute;
-  top: 14px; right: 18px;
+  position: absolute; top: 14px; right: 18px;
   background: none; border: none;
-  font-size: 22px; color: #0d2f6e;
-  cursor: pointer; line-height: 1;
-  font-weight: 700;
+  font-size: 22px; color: #0d2060; cursor: pointer; font-weight: 700;
 }
-
-.modal-top {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
+.modal-top { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
 .profile-pic {
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  border: 3px solid #0d2f6e;
-  overflow: hidden;
-  background: #fff;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px; border-radius: 50%;
+  border: 3px solid #0d2060; overflow: hidden; background: #fff;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
 }
-
 .profile-pic svg { width: 44px; height: 44px; }
-
 .edit-photo-btn {
-  background: #1a6fd4;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 7px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
+  background: #0d2f6e; color: #fff; border: none;
+  border-radius: 20px; padding: 8px 18px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: 'Poppins', sans-serif;
 }
-
-.edit-photo-btn:hover { background: #1358b0; }
-
-.field {
-  margin-bottom: 14px;
-}
-
-.field input {
-  width: 100%;
-  background: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 20px;
-  font-size: 15px;
-  color: #0d2f6e;
-  outline: none;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.field input::placeholder { color: #aaa; }
-
+.field { margin-bottom: 14px; }
 .field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0d2f6e;
-  margin-top: 5px;
-  padding-left: 14px;
+  display: block; font-size: 12px; font-weight: 700;
+  color: #0d2060; margin-bottom: 5px; padding-left: 14px;
 }
-
+.field input {
+  width: 100%; background: #fff; border: none;
+  border-radius: 30px; padding: 12px 20px;
+  font-size: 14px; color: #0d2060; outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+.field input::placeholder { color: #aaa; }
 .save-btn {
-  width: 100%;
-  background: #1a6fd4;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 12px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 6px;
+  width: 100%; background: #0d2f6e; color: #fff;
+  border: none; border-radius: 30px; padding: 13px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  margin-top: 4px; font-family: 'Poppins', sans-serif;
   transition: background 0.15s;
-  font-family: 'Segoe UI', sans-serif;
 }
+.save-btn:hover { background: #1a3bbf; }
 
-.save-btn:hover { background: #1358b0; }
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo-box" title="Nexovoz">
-    <div class="logo-placeholder">NEXO<br>VOZ</div>
-  </div>
+  <a href="/Nexovoz/pages/nexovozinicio.html" class="nav-logo" title="NEXOVOZ">
+    <img src="../assets/img/logo.png" alt="NEXOVOZ"
+         onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+    <span class="nav-logo-txt" style="display:none;">NEXO<br>VOZ</span>
+  </a>
 
-  <div></div>
-
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button class="user-btn" onclick="abrirModal()" title="Mi perfil">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#0d2f6e" stroke-width="2" stroke-linecap="round">
+  <div class="nav-right">
+    <div class="user-avatar" onclick="toggleDd()" id="avatarBtn" title="Mi perfil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
         <circle cx="12" cy="8" r="4"/>
         <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
       </svg>
-    </button>
-    <a href="../backend/cerrar_sesion.php" style="background:#c0392b;color:#fff;border:none;border-radius:30px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;font-family:'Segoe UI',sans-serif;white-space:nowrap;">Cerrar sesion</a>
+    </div>
+    <a href="../backend/cerrar_sesion.php" class="btn-logout">Cerrar sesion</a>
   </div>
 </nav>
 
-<!-- TÍTULO -->
+<!-- USER DROPDOWN -->
+<div class="user-dd" id="userDd">
+  <div class="dd-name" id="ddName">...</div>
+  <a href="#" onclick="abrirModal();return false;">Editar perfil</a>
+  <a href="../backend/cerrar_sesion.php" class="dd-logout">Cerrar sesion</a>
+</div>
+
+<!-- HERO -->
 <div class="hero">
-  <div class="title-box">Nexovoz</div>
+  <div class="greeting-tag" id="greetTag">Bienvenido/a</div>
+  <h1>Hola, <span id="heroNombre">usuario</span></h1>
+  <p>Que quieres practicar hoy?</p>
 </div>
 
-<!-- GRID -->
-<div class="grid">
+<!-- CARDS -->
+<div class="cards-grid">
 
-  <div class="bubble">
-    <a class="btn-inicio" href="ejercicios_lenguaje.html" title="Ejercios">
-      <div class="bubble-icon">🗣️</div>
-      <div class="bubble-label">Ejercios</div>
+  <a href="/Nexovoz/pages/ejercicios_lenguaje.html" class="module-card">
+    <div class="card-icon">🗣️</div>
+    <div class="card-title">Ejercicios</div>
+    <div class="card-desc">Practica con ejercicios guiados para mejorar tu habla y lenguaje</div>
+    <span class="card-arrow">Ir →</span>
   </a>
-  </div>
-  <div class="bubble">
-    
-    <a class="btn-inicio" href="agendar_cita_fonoaudiologia.html" title="calendario">
-        <div class="bubble-icon">📚</div>
-        <div class="bubble-label">calendario</div>
-    </a>
 
-</div>
-  
-  
-  <div class="bubble">
-  <a class="btn-inicio" href="5foro_con_boton_inicio.html" title="Foro">
-    <div class="bubble-icon">💬</div>
-    <div class="bubble-label">Foro</div>
-</a>
-</div>
-  
+  <a href="/Nexovoz/pages/agendar_cita_fonoaudiologia.html" class="module-card">
+    <div class="card-icon">�</div>
+    <div class="card-title">Agendar cita</div>
+    <div class="card-desc">Reserva tu proxima sesion con tu fonoaudiologa</div>
+    <span class="card-arrow">Ir →</span>
+  </a>
 
-  <div class="bubble">
-    
-    <a class="btn-inicio" href="biblioteca_lenguaje.html" title="Biblioteca">
-        <div class="bubble-icon">📚</div>
-        <div class="bubble-label">Biblioteca</div>
-    </a>
+  <a href="/Nexovoz/pages/foro.html" class="module-card">
+    <div class="card-icon">💬</div>
+    <div class="card-title">Foro</div>
+    <div class="card-desc">Conecta con otros pacientes y comparte tu experiencia</div>
+    <span class="card-arrow">Ir →</span>
+  </a>
 
-</div>
+  <a href="/Nexovoz/pages/biblioteca_lenguaje.html" class="module-card">
+    <div class="card-icon">📚</div>
+    <div class="card-title">Biblioteca</div>
+    <div class="card-desc">Recursos, guias y materiales terapeuticos a tu alcance</div>
+    <span class="card-arrow">Ir →</span>
+  </a>
 
-  <div class="bubble" onclick="ir('proceso')">
-    <div class="bubble-icon">🏃</div>
-    <div class="bubble-label">Proceso</div>
-  </div> 
+  <a href="/Nexovoz/pages/3pruebadevoz.html" class="module-card">
+    <div class="card-icon">�</div>
+    <div class="card-title">Prueba de voz</div>
+    <div class="card-desc">Evalua y mejora tu lenguaje con ejercicios interactivos</div>
+    <span class="card-arrow">Ir →</span>
+  </a>
 
-  <div class="bubble">
-    
-    <a class="btn-inicio" href="3pruebadevoz.html" title="Mejora tu lenguaje">
-        <div class="bubble-icon">💡</div>
-        <div class="bubble-label">Mejora tu lenguaje</div>
-    </a>
-
-</div>
-
-  
+  <a href="/Nexovoz/pages/agendar_cita_fonoaudiologia.html" class="module-card">
+    <div class="card-icon">�</div>
+    <div class="card-title">Mi progreso</div>
+    <div class="card-desc">Revisa tu avance y evolucion en el proceso terapeutico</div>
+    <span class="card-arrow">Ir →</span>
+  </a>
 
 </div>
 
 <!-- MODAL PERFIL -->
 <div class="overlay" id="overlay" onclick="cerrarFuera(event)">
   <div class="modal" id="modal">
-    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
 
     <div class="modal-top">
       <div class="profile-pic" id="profile-pic">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#0d2f6e" stroke-width="1.8" stroke-linecap="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0d2060" stroke-width="1.8" stroke-linecap="round">
           <circle cx="12" cy="8" r="4"/>
           <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
       </div>
       <div>
-        <button class="edit-photo-btn" onclick="editarFoto()">Editar foto</button>
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px;" id="modalNombre">...</div>
+        <button class="edit-photo-btn" onclick="editarFoto()">Cambiar foto</button>
         <input type="file" id="file-input" accept="image/*" style="display:none" onchange="cargarFoto(event)">
       </div>
     </div>
 
     <div class="field">
+      <label>Nombre</label>
       <input type="text" id="inp-nombre" placeholder="Tu nombre...">
-      <label>Editar nombre</label>
     </div>
-
     <div class="field">
+      <label>Correo</label>
       <input type="email" id="inp-correo" placeholder="tucorreo@email.com">
-      <label>Editar Correo</label>
     </div>
-
     <div class="field">
-      <input type="password" id="inp-pass" placeholder="••••••••">
-      <label>Editar contraseña</label>
+      <label>Nueva contrasena (opcional)</label>
+      <input type="password" id="inp-pass" placeholder="........">
     </div>
 
     <form action="../backend/editar_perfil.php" method="POST" id="formPerfil">
       <input type="hidden" name="nombre" id="hidden-nombre">
-      <input type="hidden" name="correo" id="hidden-correo">
+      <input type="hidden" name="correo"  id="hidden-correo">
       <input type="hidden" name="contraseña" id="hidden-pass">
       <button type="button" class="save-btn" onclick="guardar()">Guardar cambios</button>
     </form>
-
   </div>
 </div>
 
 <script>
-function abrirModal(){
-  document.getElementById('overlay').classList.add('open');
-  fetch('../backend/obtener_usuario.php')
-    .then(res => res.json())
-    .then(data => {
-      if(data){
-        document.getElementById('inp-nombre').value = data.nombre || '';
-        document.getElementById('inp-correo').value = data.correo || '';
-      }
-    });
+function cargarUsuario() {
+  fetch('../backend/obtener_usuario.php').then(r => r.json()).then(d => {
+    if (d && d.nombre) {
+      const first = d.nombre.split(' ')[0];
+      document.getElementById('heroNombre').textContent = first;
+      document.getElementById('ddName').textContent = d.nombre;
+      document.getElementById('greetTag').textContent = 'Bienvenido/a, ' + first;
+    }
+  }).catch(() => {});
 }
-function cerrarModal(){ document.getElementById('overlay').classList.remove('open'); }
-function cerrarFuera(e){ if(e.target===document.getElementById('overlay')) cerrarModal(); }
 
-function editarFoto(){ document.getElementById('file-input').click(); }
+function toggleDd() {
+  document.getElementById('userDd').classList.toggle('open');
+}
 
-function cargarFoto(e){
-  const file = e.target.files[0];
-  if(!file) return;
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('userDd');
+  const btn = document.getElementById('avatarBtn');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) dd.classList.remove('open');
+});
+
+function abrirModal() {
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('userDd').classList.remove('open');
+  fetch('../backend/obtener_usuario.php').then(r => r.json()).then(d => {
+    if (d) {
+      document.getElementById('inp-nombre').value = d.nombre || '';
+      document.getElementById('inp-correo').value = d.correo || '';
+      document.getElementById('modalNombre').textContent = d.nombre || '';
+    }
+  }).catch(() => {});
+}
+
+function cerrarModal() { document.getElementById('overlay').classList.remove('open'); }
+function cerrarFuera(e) { if (e.target === document.getElementById('overlay')) cerrarModal(); }
+
+function editarFoto() { document.getElementById('file-input').click(); }
+
+function cargarFoto(e) {
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
-    const pic = document.getElementById('profile-pic');
-    pic.innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    document.getElementById('profile-pic').innerHTML =
+      `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
   };
   reader.readAsDataURL(file);
 }
 
-function guardar(){
+function guardar() {
   const nombre = document.getElementById('inp-nombre').value.trim();
   const correo = document.getElementById('inp-correo').value.trim();
   const pass   = document.getElementById('inp-pass').value;
-  if(!nombre || !correo){ alert('El nombre y correo son obligatorios.'); return; }
+  if (!nombre || !correo) { alert('Nombre y correo son obligatorios.'); return; }
   document.getElementById('hidden-nombre').value = nombre;
   document.getElementById('hidden-correo').value = correo;
   document.getElementById('hidden-pass').value   = pass;
   document.getElementById('formPerfil').submit();
 }
 
-function ir(seccion){
-  const nombres = {
-    ejercicio:'Ejercicio', calendario:'Calendario', foro:'Foro',
-    biblioteca:'Biblioteca', proceso:'Proceso', lenguaje:'Mejora tu lenguaje'
-  };
-  alert('Navegando a: ' + nombres[seccion]);
-}
+cargarUsuario();
 </script>
 
 </body>
