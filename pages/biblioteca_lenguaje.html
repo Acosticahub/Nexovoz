@@ -1,176 +1,187 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca - NEXOVOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  .bib-wrap { background: #1e3fae; min-height: 100vh; padding: 0 0 2rem; font-family: var(--font-sans); }
-  .bib-topbar { background: #1a35a0; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
-  .bib-btn-inicio { background: white; color: #1a35a0; border: none; border-radius: 30px; padding: 8px 18px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-  .bib-titulo { background: #5aaa1e; color: #173404; border-radius: 30px; padding: 8px 24px; font-size: 20px; font-weight: 500; }
-  .bib-search-wrap { padding: 20px 20px 16px; display: flex; gap: 10px; }
-  .bib-search { flex: 1; border-radius: 30px; border: 2.5px solid #1a35a0; padding: 12px 20px; font-size: 15px; outline: none; background: white; color: #1a35a0; }
-  .bib-search:focus { border-color: #5aaa1e; }
-  .bib-enviar { background: #3a7d14; color: white; border: none; border-radius: 30px; padding: 12px 22px; font-size: 14px; font-weight: 500; cursor: pointer; letter-spacing: 0.5px; }
-  .bib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; padding: 0 20px; }
-  .bib-card { background: #c8e84a; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
-  .bib-card-header { display: flex; align-items: center; gap: 12px; }
-  .bib-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1a35a0; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; flex-shrink: 0; }
-  .bib-card-name { font-size: 16px; font-weight: 500; color: #173404; }
-  .bib-card-cat { font-size: 12px; color: #3b6d11; background: #a8d636; border-radius: 20px; padding: 2px 10px; display: inline-block; }
-  .bib-card-desc { font-size: 13px; color: #27500a; line-height: 1.6; flex: 1; }
-  .bib-card-footer { display: flex; align-items: center; justify-content: space-between; }
-  .bib-card-date { font-size: 12px; color: #3b6d11; }
-  .bib-leer { background: #1a35a0; color: white; border: none; border-radius: 20px; padding: 7px 16px; font-size: 13px; cursor: pointer; font-weight: 500; }
-  .bib-leer:hover { background: #142b88; }
-  .bib-tag { font-size: 11px; color: #3b6d11; background: #b0dc3a; border-radius: 20px; padding: 2px 8px; }
-  .hidden { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .bib-wrap { background: linear-gradient(140deg,#071a4e 0%,#0d2f6e 45%,#0a3d1f 100%); min-height: 100vh; font-family: 'Poppins', sans-serif; padding-bottom: 3rem; color: white; }
+/* NAVBAR */
+.navbar { display:flex; align-items:center; justify-content:space-between; padding:16px 36px; background:rgba(0,0,0,0.18); backdrop-filter:blur(8px); position:sticky; top:0; z-index:20; }
+.nav-logo { width:50px; height:50px; border-radius:50%; border:2.5px solid #7dd63b; overflow:hidden; background:white; display:flex; align-items:center; justify-content:center; text-decoration:none; }
+.nav-logo img { width:100%; height:100%; object-fit:cover; }
+.nav-logo-txt { font-size:10px; font-weight:800; color:#0d2060; text-align:center; line-height:1.2; }
+.nav-center { font-size:18px; font-weight:800; }
+.btn-volver { background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.3); border-radius:30px; padding:8px 18px; font-size:13px; font-weight:600; cursor:pointer; text-decoration:none; font-family:'Poppins',sans-serif; transition:background 0.2s; }
+.btn-volver:hover { background:rgba(255,255,255,0.28); }
+/* SEARCH */
+.bib-search-wrap { padding:20px 36px 16px; display:flex; gap:10px; max-width:700px; }
+.bib-search { flex:1; border-radius:30px; border:none; padding:13px 22px; font-size:14px; outline:none; background:rgba(255,255,255,0.12); color:white; font-family:'Poppins',sans-serif; border:1.5px solid rgba(255,255,255,0.2); transition:border-color 0.2s; }
+.bib-search::placeholder { color:rgba(255,255,255,0.45); }
+.bib-search:focus { border-color:#7dd63b; background:rgba(255,255,255,0.16); }
+.bib-enviar { background:#7dd63b; color:#0d2060; border:none; border-radius:30px; padding:13px 24px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; }
+.bib-enviar:hover { background:#8fe84e; }
+/* PAGE HEADER */
+.page-hdr { padding:16px 36px 4px; }
+.page-hdr h1 { font-size:26px; font-weight:800; }
+.page-hdr p  { color:rgba(255,255,255,0.6); font-size:13px; margin-top:4px; }
+/* GRID */
+.bib-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; padding:14px 36px 50px; }
+/* CARD */
+.bib-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.13); border-radius:22px; padding:20px; display:flex; flex-direction:column; gap:10px; backdrop-filter:blur(8px); transition:all 0.2s; position:relative; overflow:hidden; }
+.bib-card::before { content:''; position:absolute; width:80px; height:80px; border-radius:50%; background:rgba(125,214,59,0.07); top:-25px; right:-20px; }
+.bib-card:hover { background:rgba(255,255,255,0.14); transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,0.28); border-color:rgba(125,214,59,0.4); }
+.bib-card-header { display:flex; align-items:center; gap:12px; }
+.bib-avatar { width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#0039a6,#7dd63b); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.bib-card-name { font-size:16px; font-weight:700; color:white; }
+.bib-card-cat { font-size:11px; color:#0d2060; background:#7dd63b; border-radius:20px; padding:3px 11px; display:inline-block; font-weight:700; }
+.bib-card-desc { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.6; flex:1; }
+.bib-card-footer { display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
+.bib-card-date { font-size:11px; color:rgba(255,255,255,0.4); }
+.bib-leer { background:#7dd63b; color:#0d2060; border:none; border-radius:20px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:background 0.2s; }
+.bib-leer:hover { background:#8fe84e; }
+.hidden { display:none !important; }
+/* DETAIL MODAL */
+.overlay { position:fixed; inset:0; background:rgba(5,20,60,0.75); display:none; align-items:center; justify-content:center; z-index:999; padding:20px; backdrop-filter:blur(4px); }
+.overlay.open { display:flex; }
+.det-modal { background:white; border-radius:24px; padding:28px; width:100%; max-width:500px; position:relative; color:#0d2060; animation:popIn 0.22s ease; max-height:90vh; overflow-y:auto; }
+@keyframes popIn { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
+.det-close { position:absolute; top:14px; right:16px; background:#0d2f6e; color:white; border:none; border-radius:50%; width:32px; height:32px; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.det-close:hover { background:#1a3bbf; }
+.det-emoji { font-size:44px; margin-bottom:10px; }
+.det-title { font-size:22px; font-weight:800; margin-bottom:4px; }
+.det-cat { font-size:12px; font-weight:700; color:#0d2060; background:#7dd63b; border-radius:20px; padding:3px 12px; display:inline-block; margin-bottom:14px; }
+.det-section { margin-bottom:12px; }
+.det-section h4 { font-size:12px; font-weight:700; color:white; background:#0d2f6e; border-radius:10px; padding:3px 12px; display:inline-block; margin-bottom:5px; }
+.det-section p { font-size:13px; color:#2a3a6e; line-height:1.6; }
+@media(max-width:720px){ .navbar{padding:14px 18px;} .bib-grid{padding:12px 18px 40px; gap:12px;} .bib-search-wrap{padding:14px 18px 12px;} .page-hdr{padding:14px 18px 4px;} .nav-center{display:none;} }
 </style>
-
+</head>
+<body>
 <div class="bib-wrap">
-  <h2 class="sr-only" style="position:absolute;left:-9999px">Biblioteca digital de dificultades del lenguaje</h2>
 
-  <div class="top-bar">
-    <a class="btn-inicio" href="nexovozinicio.html" title="Volver a la página principal">
-      <span class="arrow">&#8592;</span> Inicio
-    </a>
-    <div class="titulo-btn">Biblioteca</div>
-  </div>
-  <div class="bib-search-wrap">
-    <input class="bib-search" type="text" id="buscador" placeholder="Buscar dificultad del lenguaje..." oninput="filtrar(this.value)" />
-    <button class="bib-enviar"><i class="ti ti-search" style="font-size:15px;vertical-align:-2px;margin-right:5px" aria-hidden="true"></i>Buscar</button>
-  </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="/Nexovoz/pages/nexovozinicio.html" class="nav-logo" title="NEXOVOZ">
+    <img src="../assets/img/logo.png" alt="NEXOVOZ" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+    <span class="nav-logo-txt" style="display:none;">NEXO<br>VOZ</span>
+  </a>
+  <div class="nav-center">Biblioteca</div>
+  <a href="/Nexovoz/pages/nexovozinicio.html" class="btn-volver">&#8592; Volver</a>
+</nav>
 
-  <div class="bib-grid" id="grid">
+<!-- HEADER + SEARCH -->
+<div class="page-hdr">
+  <h1>Biblioteca de dificultades del lenguaje</h1>
+  <p>Consulta informacion sobre condiciones, causas y tratamientos</p>
+</div>
+<div class="bib-search-wrap">
+  <input class="bib-search" type="text" id="buscador" placeholder="Buscar dificultad del lenguaje..." oninput="filtrar(this.value)">
+  <button class="bib-enviar">&#128269; Buscar</button>
+</div>
 
-    <div class="bib-card" data-name="tartamudez">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-microphone" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Tartamudez</div>
-          <span class="bib-card-cat">Fluidez</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Trastorno de la fluidez del habla caracterizado por repeticiones, prolongaciones e interrupciones involuntarias al hablar.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la tartamudez, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
+<!-- GRID -->
+<div class="bib-grid" id="grid"></div>
+</div>
 
-    <div class="bib-card" data-name="dislexia">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-book" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Dislexia</div>
-          <span class="bib-card-cat">Lectura</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Dificultad específica del aprendizaje que afecta la lectura, la escritura y la ortografía, sin relación con la inteligencia.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la dislexia, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="dislalia">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-volume" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Dislalia</div>
-          <span class="bib-card-cat">Articulación</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Alteración en la articulación de los fonemas, ya sea por ausencia, sustitución o deformación de sonidos del lenguaje.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la dislalia, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="afasia">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-brain" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Afasia</div>
-          <span class="bib-card-cat">Neurológico</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Pérdida o deterioro del lenguaje causada por daño cerebral, que afecta la capacidad para hablar, comprender, leer y escribir.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la afasia, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="trastorno del lenguaje expresivo">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-message-circle" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Trastorno expresivo</div>
-          <span class="bib-card-cat">Expresión</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Dificultad para expresar ideas y pensamientos verbalmente, con vocabulario limitado y oraciones incompletas o incorrectas.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el trastorno del lenguaje expresivo, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="mutismo selectivo">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-user-question" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Mutismo selectivo</div>
-          <span class="bib-card-cat">Ansiedad</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Incapacidad para hablar en situaciones sociales específicas a pesar de poder hacerlo en otros contextos, generalmente asociado a la ansiedad.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el mutismo selectivo, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="retraso del lenguaje">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-clock" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Retraso del lenguaje</div>
-          <span class="bib-card-cat">Desarrollo</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Desarrollo más lento de las habilidades lingüísticas en comparación con otros niños de la misma edad, afectando vocabulario y gramática.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es el retraso del lenguaje, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
-    <div class="bib-card" data-name="disgrafía disgrafia">
-      <div class="bib-card-header">
-        <div class="bib-avatar"><i class="ti ti-pencil" aria-hidden="true"></i></div>
-        <div>
-          <div class="bib-card-name">Disgrafía</div>
-          <span class="bib-card-cat">Escritura</span>
-        </div>
-      </div>
-      <div class="bib-card-desc">Dificultad específica para escribir a mano de forma legible y fluida, que puede afectar la forma de las letras, el espaciado y la velocidad.</div>
-      <div class="bib-card-footer">
-        <span class="bib-card-date"><i class="ti ti-calendar" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i> 2025</span>
-        <button class="bib-leer" onclick="sendPrompt('Explícame detalladamente qué es la disgrafía, sus causas y tratamientos')">Leer más</button>
-      </div>
-    </div>
-
+<!-- DETAIL MODAL -->
+<div class="overlay" id="overlay" onclick="cerrarFuera(event)">
+  <div class="det-modal" id="detModal">
+    <button class="det-close" onclick="cerrarModal()">&#x2715;</button>
+    <div class="det-emoji" id="detEmoji"></div>
+    <div class="det-title" id="detTitle"></div>
+    <span class="det-cat" id="detCat"></span>
+    <div class="det-section"><h4>Que es</h4><p id="detDesc"></p></div>
+    <div class="det-section"><h4>Causas</h4><p id="detCausas"></p></div>
+    <div class="det-section"><h4>Tratamiento</h4><p id="detTrat"></p></div>
+    <div class="det-section"><h4>Ejercicios recomendados</h4><p id="detEj"></p></div>
   </div>
 </div>
 
 <script>
-function filtrar(q) {
-  var cards = document.querySelectorAll('.bib-card');
-  q = q.toLowerCase().trim();
-  cards.forEach(function(c) {
-    var name = c.getAttribute('data-name') || '';
-    var desc = c.querySelector('.bib-card-desc') ? c.querySelector('.bib-card-desc').textContent.toLowerCase() : '';
-    var match = name.includes(q) || desc.includes(q);
-    c.classList.toggle('hidden', !match);
-  });
+var articulos = [
+  { nombre:"Tartamudez", cat:"Fluidez", emoji:"🗣️", buscar:"tartamudez",
+    desc:"Trastorno de la fluidez del habla caracterizado por repeticiones, prolongaciones e interrupciones involuntarias al hablar, que pueden ir acompanadas de tension muscular y ansiedad.",
+    causas:"Factores geneticos, neurologicos y ambientales. Puede estar relacionado con la madurez del sistema nervioso, antecedentes familiares y situaciones de estres.",
+    trat:"Terapia fonoaudiologica con tecnicas de fluidez, tecnicas de relajacion, terapia cognitivo-conductual para manejar la ansiedad y grupos de apoyo.",
+    ej:"Respiracion diafragmatica, habla controlada, lectura en voz alta a ritmo lento." },
+  { nombre:"Dislexia", cat:"Lectura", emoji:"📖", buscar:"dislexia",
+    desc:"Dificultad especifica del aprendizaje que afecta la lectura, la escritura y la ortografia, sin relacion con la inteligencia ni con factores ambientales.",
+    causas:"Base neurologica con componente genetico. Afecta el procesamiento fonologico, la memoria de trabajo y la velocidad de procesamiento.",
+    trat:"Intervencion educativa especializada, metodos multisensoriales, apoyo fonoaudiologico en conciencia fonemica y estrategias de lectura.",
+    ej:"Segmentacion silabica, lectura en voz alta, ejercicios de conciencia fonemica." },
+  { nombre:"Dislalia", cat:"Articulacion", emoji:"🔊", buscar:"dislalia",
+    desc:"Alteracion en la articulacion de los fonemas, ya sea por ausencia, sustitucion o deformacion de sonidos del lenguaje.",
+    causas:"Problemas anatomicos (frenillo lingual, maloclusion dental), falta de estimulacion, imitacion incorrecta de sonidos o alteraciones auditivas.",
+    trat:"Terapia fonoaudiologica dirigida a mejorar los puntos articulatorios especificos, ejercicios orofaciales y retroalimentacion auditiva.",
+    ej:"Ejercicios de lengua y labios, vocalizacion de fonemas aislados, trabalenguas." },
+  { nombre:"Afasia", cat:"Neurologico", emoji:"🧠", buscar:"afasia",
+    desc:"Perdida o deterioro del lenguaje causada por dano cerebral (generalmente ACV o traumatismo), que afecta la capacidad para hablar, comprender, leer y escribir.",
+    causas:"Accidente cerebrovascular, traumatismo craneal, tumores cerebrales u otras enfermedades neurologicas que afectan las areas del lenguaje.",
+    trat:"Rehabilitacion fonoaudiologica intensiva, terapia cognitiva del lenguaje, uso de comunicacion aumentativa y alternativa (CAA) si es necesario.",
+    ej:"Denominacion de objetos, repeticion de palabras, memoria verbal, ejercicios de comprension." },
+  { nombre:"Trastorno expresivo", cat:"Expresion", emoji:"💬", buscar:"trastorno del lenguaje expresivo",
+    desc:"Dificultad para expresar ideas y pensamientos verbalmente, con vocabulario limitado, oraciones incompletas o construcciones gramaticales incorrectas.",
+    causas:"Puede tener base neurologica, genetica o relacionarse con privacion lingüistica temprana. En ninos se asocia a retrasos del desarrollo.",
+    trat:"Terapia del lenguaje enfocada en expansion del vocabulario, estructuras gramaticales y estrategias de comunicacion funcional.",
+    ej:"Narracion de cuentos, descripcion de imagenes, ejercicios de construccion de oraciones." },
+  { nombre:"Mutismo selectivo", cat:"Ansiedad", emoji:"🤫", buscar:"mutismo selectivo",
+    desc:"Incapacidad consistente para hablar en situaciones sociales especificas (ej. colegio) a pesar de poder hacerlo en otros contextos.",
+    causas:"Trastorno de ansiedad social con componente genetico. Factores ambientales como eventos estresantes o cambios importantes pueden desencadenarlo.",
+    trat:"Terapia conductual gradual (desensibilizacion), terapia cognitivo-conductual, trabajo conjunto con familia y escuela, y en algunos casos medicacion.",
+    ej:"Tecnicas de relajacion, exposicion gradual a situaciones sociales, habla en susurros como paso intermedio." },
+  { nombre:"Retraso del lenguaje", cat:"Desarrollo", emoji:"⏳", buscar:"retraso del lenguaje",
+    desc:"Desarrollo mas lento de las habilidades linguisticas en comparacion con otros ninos de la misma edad, afectando vocabulario, gramatica y comunicacion.",
+    causas:"Factores geneticos, estimulacion inadecuada, hipoacusia, trastornos del neurodesarrollo o bilingüismo en algunos casos.",
+    trat:"Estimulacion temprana del lenguaje, terapia fonoaudiologica, participacion activa de la familia y el entorno escolar.",
+    ej:"Lectura compartida, juegos de palabras, cantos, repeticion de rimas y trabalenguas sencillos." },
+  { nombre:"Disgrafia", cat:"Escritura", emoji:"✏️", buscar:"disgrafia disgrafía",
+    desc:"Dificultad especifica para escribir a mano de forma legible y fluida, que puede afectar la forma de las letras, el espaciado y la velocidad de escritura.",
+    causas:"Problemas en la coordinacion motora fina, dificultades visoespaciales o procesamiento grafomotor deficiente.",
+    trat:"Terapia ocupacional para la coordinacion motora fina, estrategias grafomotrices, uso de herramientas adaptadas y tecnologia de apoyo.",
+    ej:"Trazado de figuras, ejercicios de pinza, caligrafias guiadas, uso de lineas y cuadriculas." }
+];
+
+function renderGrid(filtro) {
+  var grid = document.getElementById('grid');
+  var items = filtro ? articulos.filter(function(a){ return a.buscar.includes(filtro) || a.nombre.toLowerCase().includes(filtro) || a.desc.toLowerCase().includes(filtro); }) : articulos;
+  if (!items.length) { grid.innerHTML = '<div style="color:rgba(255,255,255,0.5);padding:30px;grid-column:1/-1;text-align:center;">No se encontraron resultados.</div>'; return; }
+  grid.innerHTML = items.map(function(a, i) {
+    return '<div class="bib-card">' +
+      '<div class="bib-card-header">' +
+        '<div class="bib-avatar">' + a.emoji + '</div>' +
+        '<div><div class="bib-card-name">' + a.nombre + '</div><span class="bib-card-cat">' + a.cat + '</span></div>' +
+      '</div>' +
+      '<div class="bib-card-desc">' + a.desc.slice(0,120) + '...</div>' +
+      '<div class="bib-card-footer">' +
+        '<span class="bib-card-date">2025</span>' +
+        '<button class="bib-leer" onclick="abrirDetalle(' + articulos.indexOf(a) + ')">Leer mas</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 }
+
+function filtrar(q) { renderGrid(q.toLowerCase().trim()); }
+
+function abrirDetalle(i) {
+  var a = articulos[i];
+  document.getElementById('detEmoji').textContent  = a.emoji;
+  document.getElementById('detTitle').textContent  = a.nombre;
+  document.getElementById('detCat').textContent    = a.cat;
+  document.getElementById('detDesc').textContent   = a.desc;
+  document.getElementById('detCausas').textContent = a.causas;
+  document.getElementById('detTrat').textContent   = a.trat;
+  document.getElementById('detEj').textContent     = a.ej;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function cerrarModal() { document.getElementById('overlay').classList.remove('open'); }
+function cerrarFuera(e) { if (e.target === document.getElementById('overlay')) cerrarModal(); }
+
+renderGrid('');
 </script>
+</body>
+</html>

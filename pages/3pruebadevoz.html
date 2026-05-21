@@ -1,32 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>NEXOVOZ - Prueba de Voz</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba de Voz - NEXOVOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Poppins', sans-serif; background: linear-gradient(140deg,#071a4e 0%,#0d2f6e 45%,#0a3d1f 100%); min-height: 100vh; color: white; }
+
+.navbar { display:flex; align-items:center; justify-content:space-between; padding:16px 36px; background:rgba(0,0,0,0.18); backdrop-filter:blur(8px); position:sticky; top:0; z-index:20; }
+.nav-logo { width:50px; height:50px; border-radius:50%; border:2.5px solid #7dd63b; overflow:hidden; background:white; display:flex; align-items:center; justify-content:center; text-decoration:none; }
+.nav-logo img { width:100%; height:100%; object-fit:cover; }
+.nav-logo-txt { font-size:10px; font-weight:800; color:#0d2060; text-align:center; line-height:1.2; }
+.nav-center { font-size:18px; font-weight:800; }
+.btn-volver { background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.3); border-radius:30px; padding:8px 18px; font-size:13px; font-weight:600; cursor:pointer; text-decoration:none; font-family:'Poppins',sans-serif; transition:background 0.2s; }
+.btn-volver:hover { background:rgba(255,255,255,0.28); }
+
+.pv-container { max-width: 600px; margin: 0 auto; padding: 36px 24px 60px; text-align: center; }
+
+/* PROGRESS STEPS */
+.steps { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:32px; }
+.step-dot { width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:rgba(255,255,255,0.5); transition:all 0.3s; flex-shrink:0; }
+.step-dot.active { background:#7dd63b; border-color:#7dd63b; color:#0d2060; }
+.step-dot.done { background:#0d2f6e; border-color:#7dd63b; color:#7dd63b; }
+.step-line { flex:1; height:2px; background:rgba(255,255,255,0.15); max-width:40px; transition:background 0.3s; }
+.step-line.done { background:#7dd63b; }
+
+/* MIC */
+.mic-wrap { position:relative; display:inline-flex; align-items:center; justify-content:center; margin: 24px auto; }
+.mic-ring { width:130px; height:130px; border-radius:50%; background:rgba(125,214,59,0.12); border:2px solid rgba(125,214,59,0.25); display:flex; align-items:center; justify-content:center; transition:all 0.3s; }
+.mic-ring.recording { background:rgba(125,214,59,0.25); box-shadow:0 0 0 16px rgba(125,214,59,0.08); animation:pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 10px rgba(125,214,59,0.08)} 50%{box-shadow:0 0 0 22px rgba(125,214,59,0.04)} }
+.mic-emoji { font-size:60px; line-height:1; }
+
+/* PHASE CARD */
+.phase-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:22px; padding:24px 22px; margin:0 auto 24px; max-width:480px; backdrop-filter:blur(8px); animation:fadeUp 0.3s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+.phase-title { font-size:13px; font-weight:700; color:#7dd63b; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.phase-text { font-size:18px; font-weight:700; line-height:1.5; }
+.phase-hint { font-size:13px; color:rgba(255,255,255,0.5); margin-top:8px; }
+
+/* BUTTONS */
+.pv-btn { background:#7dd63b; color:#0d2060; border:none; border-radius:30px; padding:14px 36px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; }
+.pv-btn:hover { background:#8fe84e; transform:translateY(-2px); }
+.pv-btn:active { transform:scale(0.97); }
+.pv-btn.recording { background:#ff6b6b; color:white; }
+.pv-btn.recording:hover { background:#ff4757; }
+.pv-btn-outline { background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.25); border-radius:30px; padding:12px 28px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif; transition:background 0.2s; margin-top:12px; display:inline-block; text-decoration:none; }
+.pv-btn-outline:hover { background:rgba(255,255,255,0.2); }
+
+/* RESULT */
+.result-card { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:22px; padding:24px 22px; text-align:left; margin-bottom:16px; backdrop-filter:blur(8px); }
+.result-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.result-item { background:rgba(255,255,255,0.06); border-radius:14px; padding:14px; }
+.result-label { font-size:11px; color:rgba(255,255,255,0.5); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+.result-value { font-size:14px; font-weight:700; }
+.result-value.ok { color:#7dd63b; }
+.result-value.warn { color:#ffb347; }
+.result-disclaimer { font-size:12px; color:rgba(255,255,255,0.4); text-align:center; margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; }
+
+.instructions-txt { color:rgba(255,255,255,0.6); font-size:14px; margin:16px 0 24px; }
+
+@media(max-width:720px){ .navbar{padding:14px 18px;} .nav-center{display:none;} .pv-container{padding:24px 16px 50px;} .result-grid{grid-template-columns:1fr;} }
+</style>
 </head>
 <body>
 
-<!-- Barra superior -->
-<div class="nav">
-    <a href="nexovozinicio.html" class="btn-home">🏠 Inicio</a>
+<nav class="navbar">
+  <a href="/Nexovoz/pages/nexovozinicio.html" class="nav-logo" title="NEXOVOZ">
+    <img src="../assets/img/logo.png" alt="NEXOVOZ" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+    <span class="nav-logo-txt" style="display:none;">NEXO<br>VOZ</span>
+  </a>
+  <div class="nav-center">Prueba de Voz</div>
+  <a href="/Nexovoz/pages/nexovozinicio.html" class="btn-volver">&#8592; Volver</a>
+</nav>
+
+<div class="pv-container">
+
+  <!-- PROGRESS DOTS -->
+  <div class="steps" id="stepsBar">
+    <div class="step-dot" id="dot0">1</div>
+    <div class="step-line" id="line0"></div>
+    <div class="step-dot" id="dot1">2</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">3</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">4</div>
+  </div>
+
+  <!-- MIC -->
+  <div class="mic-wrap">
+    <div class="mic-ring" id="micRing">
+      <span class="mic-emoji">🎤</span>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div id="contentArea">
+    <p class="instructions-txt">Presiona el boton para comenzar la evaluacion de voz.<br>Se realizaran 4 pruebas breves.</p>
+    <button class="pv-btn" onclick="iniciarPrueba()">&#9654; Iniciar prueba</button>
+  </div>
+
 </div>
 
-<div class="container">
-    <h1>Prueba de Voz</h1>
+<script>
+var phase = 0;
+var phases = [
+  { title:"Prueba 1 · Pronunciacion", text:"Repite en voz alta: PERRO, RATON, ZAPATO, ESTRELLA", hint:"Pronuncia cada palabra con claridad." },
+  { title:"Prueba 2 · Fluidez", text:"\"El gato corre rapidamente por el jardin.\"", hint:"Lee la frase en voz alta de forma natural." },
+  { title:"Prueba 3 · Articulacion espontanea", text:"Describe brevemente que hiciste ayer.", hint:"Habla con naturalidad durante 10 segundos." },
+  { title:"Prueba 4 · Velocidad del habla", text:"Habla sobre tu comida favorita durante 10 segundos.", hint:"Mantén un ritmo comodo, sin apurarte." }
+];
 
-    <div class="mic-container">
-        <img src="../assets/img/microfono.png" class="mic">
-        <button id="startBtn">Iniciar Prueba</button>
-    </div>
+function updateSteps(current) {
+  for (var i = 0; i < 4; i++) {
+    var dot = document.getElementById('dot' + i);
+    dot.className = 'step-dot' + (i < current ? ' done' : (i === current ? ' active' : ''));
+    if (i < 3) {
+      var line = document.getElementById('line' + i);
+      line.className = 'step-line' + (i < current ? ' done' : '');
+    }
+  }
+}
 
-    <div id="instructions">
-        <p>Presiona iniciar para comenzar la evaluación de voz.</p>
-    </div>
+function iniciarPrueba() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function() { mostrarFase(); })
+    .catch(function() { alert('Debes permitir el uso del microfono para la prueba.'); });
+}
 
-    <div id="testArea"></div>
-</div>
+function mostrarFase() {
+  if (phase < phases.length) {
+    var p = phases[phase];
+    updateSteps(phase);
+    document.getElementById('contentArea').innerHTML =
+      '<div class="phase-card">' +
+        '<div class="phase-title">' + p.title + '</div>' +
+        '<div class="phase-text">' + p.text + '</div>' +
+        '<div class="phase-hint">' + p.hint + '</div>' +
+      '</div>' +
+      '<button class="pv-btn" id="recBtn" onclick="grabar()">&#127908; Grabar respuesta</button>';
+  } else {
+    updateSteps(4);
+    mostrarResultado();
+  }
+}
 
-<script src="../assets/js/script.js"></script>
+function grabar() {
+  var btn = document.getElementById('recBtn');
+  btn.className = 'pv-btn recording';
+  btn.textContent = '⏹ Grabando...';
+  document.getElementById('micRing').classList.add('recording');
+  btn.onclick = null;
+  setTimeout(function() {
+    document.getElementById('micRing').classList.remove('recording');
+    phase++;
+    mostrarFase();
+  }, 3000);
+}
+
+function mostrarResultado() {
+  var diag = 'Posible dislalia (errores en pronunciacion)';
+  var reco = 'Practicar lectura en voz alta, repetir palabras y controlar la respiracion.';
+
+  document.getElementById('contentArea').innerHTML =
+    '<div class="phase-card" style="text-align:left;margin-bottom:20px;">' +
+      '<div class="phase-title" style="margin-bottom:14px;">&#10003; Resultado de la evaluacion</div>' +
+      '<div class="result-grid">' +
+        '<div class="result-item"><div class="result-label">Pronunciacion</div><div class="result-value warn">Posible dislalia</div></div>' +
+        '<div class="result-item"><div class="result-label">Fluidez</div><div class="result-value ok">Aceptable</div></div>' +
+        '<div class="result-item"><div class="result-label">Articulacion</div><div class="result-value ok">Normal</div></div>' +
+        '<div class="result-item"><div class="result-label">Velocidad</div><div class="result-value warn">Ligeramente rapida</div></div>' +
+      '</div>' +
+      '<div style="margin-top:14px;"><div class="result-label" style="margin-bottom:5px;">Recomendaciones</div><div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;">' + reco + '</div></div>' +
+      '<div class="result-disclaimer">Este resultado es orientativo y no reemplaza la evaluacion de un profesional.</div>' +
+    '</div>' +
+    '<button class="pv-btn" onclick="location.reload()">&#8635; Repetir prueba</button>' +
+    '<br><a href="/Nexovoz/pages/progreso.html" class="pv-btn-outline">Ver mi progreso</a>';
+
+  var datos = new FormData();
+  datos.append('pronunciacion',   'Posible dislalia');
+  datos.append('fluidez',         'Aceptable');
+  datos.append('articulacion',    'Normal');
+  datos.append('velocidad',       'Ligeramente rapida');
+  datos.append('diagnostico',     diag);
+  datos.append('recomendaciones', reco);
+  fetch('../backend/guardar_resultado.php', { method: 'POST', body: datos });
+}
+</script>
+
 </body>
 </html>
