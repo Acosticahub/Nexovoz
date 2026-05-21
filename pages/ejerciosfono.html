@@ -3,328 +3,534 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biblioteca NEXOVOZ</title>
-
+<title>Ejercicios - NEXOVOZ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: 'Segoe UI', sans-serif;
+
+/* ── BASE ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0039a6, #0052cc);
+    min-height: 100vh;
+    color: white;
 }
 
-body{
-    background:#1838b9;
-    color:white;
-    padding:30px;
+/* ── NAVBAR ── */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 36px;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(6px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-/* TITULOS */
-
-h1{
-    margin-bottom:10px;
-    font-size:35px;
+.navbar-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
-.sub{
-    margin-bottom:30px;
-    color:#d6e0ff;
+.navbar-right { display: flex; gap: 12px; align-items: center; }
+
+.btn-back {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s;
 }
 
-/* GRID */
+.btn-back:hover { background: rgba(255,255,255,0.28); }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
+.btn-add {
+    background: #b6ff00;
+    color: #003090;
+    border: none;
+    border-radius: 30px;
+    padding: 9px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s, transform 0.15s;
 }
 
-/* TARJETAS */
+.btn-add:hover { background: #a3e600; transform: scale(1.04); }
 
-.card{
-    background:#c8ea41;
-    color:#111;
-    border-radius:25px;
-    padding:25px;
-    position:relative;
-    transition:0.3s;
-    min-height:260px;
+/* ── HEADER ── */
+.page-header {
+    padding: 36px 36px 10px;
 }
 
-.card:hover{
-    transform:translateY(-5px);
+.page-header h1 { font-size: 30px; font-weight: 700; }
+.page-header p  { color: #b6d4ff; font-size: 14px; margin-top: 4px; }
+
+/* ── GRID ── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 22px;
+    padding: 28px 36px 50px;
 }
 
-.icon{
-    width:55px;
-    height:55px;
-    background:#1838b9;
-    border-radius:50%;
-    margin-bottom:20px;
+/* ── CARD ── */
+.card {
+    background: #b6ff00;
+    color: #0d2060;
+    border-radius: 22px;
+    padding: 26px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 220px;
 }
 
-.tag{
-    display:inline-block;
-    background:#b1d52d;
-    padding:5px 14px;
-    border-radius:20px;
-    margin:10px 0;
-    font-size:14px;
+.card:hover { transform: translateY(-5px); box-shadow: 0 14px 30px rgba(0,0,0,0.25); }
+
+.card-icon {
+    font-size: 34px;
+    line-height: 1;
 }
 
-.card p{
-    margin-top:15px;
-    line-height:1.6;
+.card-tag {
+    display: inline-block;
+    background: rgba(0,48,144,0.15);
+    color: #003090;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
 }
 
-/* BOTONES */
+.card h3 { font-size: 16px; font-weight: 700; line-height: 1.3; }
+.card p   { font-size: 13px; line-height: 1.6; opacity: 0.85; flex: 1; }
 
-.btn{
-    margin-top:20px;
-    padding:12px 24px;
-    border:none;
-    border-radius:30px;
-    background:#1838b9;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+.card-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+.btn-comenzar {
+    background: #0039a6;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s;
 }
 
-.btn:hover{
-    background:#10298a;
+.btn-comenzar:hover { background: #002880; }
+
+.btn-video {
+    background: transparent;
+    color: #003090;
+    border: 2px solid #003090;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.2s;
 }
 
-/* BOTON MAS */
+.btn-video:hover { background: rgba(0,48,144,0.1); }
 
-.add-card{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:70px;
-    cursor:pointer;
-    color:#1838b9;
-    font-weight:bold;
+/* ── CARD ADD ── */
+.card-add {
+    background: rgba(255,255,255,0.08);
+    border: 2px dashed rgba(255,255,255,0.35);
+    color: white;
+    border-radius: 22px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* MODAL */
+.card-add:hover { background: rgba(255,255,255,0.15); }
 
-.modal{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.7);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+.card-add .plus { font-size: 48px; font-weight: 300; line-height: 1; }
+.card-add span  { font-size: 14px; font-weight: 600; opacity: 0.8; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    opacity: 0.6;
+    font-size: 15px;
 }
 
-.modal-content{
-    background:white;
-    width:100%;
-    max-width:700px;
-    border-radius:25px;
-    padding:35px;
-    color:#111;
-    position:relative;
-    animation:show .3s ease;
+/* ── MODAL OVERLAY ── */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-@keyframes show{
-    from{
-        transform:scale(.8);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
+.overlay.open { display: flex; }
+
+/* ── MODAL BOX ── */
+.modal-box {
+    background: white;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 560px;
+    height: 88vh;
+    max-height: 680px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    animation: popIn 0.22s ease;
+    overflow: hidden;
 }
 
-.close{
-    position:absolute;
-    right:20px;
-    top:15px;
-    font-size:30px;
-    cursor:pointer;
+@keyframes popIn {
+    from { transform: scale(0.88); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
 }
 
-/* FORM */
-
-.form-group{
-    margin-top:20px;
+.modal-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    color: #0d2060;
 }
 
-label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:bold;
+.modal-header h2 { font-size: 18px; font-weight: 700; }
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
 }
 
-input,
-textarea{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:2px solid #ddd;
-    outline:none;
+.modal-close:hover { color: #333; }
+
+/* scroll interno */
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 28px;
+    color: #111;
 }
 
-textarea{
-    resize:none;
-    height:120px;
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+.modal-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+.modal-body::-webkit-scrollbar-thumb:hover { background: #aaa; }
+
+.modal-footer {
+    padding: 16px 28px;
+    border-top: 1px solid #eee;
+    flex-shrink: 0;
 }
 
-.file-box{
-    border:2px dashed #1838b9;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-    background:#f4f7ff;
+/* ── FORM ── */
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0d2060;
+    margin-bottom: 6px;
 }
 
-.save-btn{
-    margin-top:25px;
-    width:100%;
-    background:#1838b9;
-    color:white;
-    border:none;
-    padding:15px;
-    border-radius:15px;
-    font-size:17px;
-    cursor:pointer;
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #dde3f0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: #111;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #f8faff;
 }
 
-.save-btn:hover{
-    background:#10298a;
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { border-color: #0039a6; background: white; }
+
+.form-group textarea { resize: vertical; min-height: 90px; }
+
+.file-zone {
+    border: 2px dashed #b0bcdf;
+    background: #f4f7ff;
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.file-zone:hover { border-color: #0039a6; }
+.file-zone p { font-size: 13px; color: #666; margin-bottom: 8px; }
+.file-zone input { display: none; }
+.file-zone .file-label {
+    display: inline-block;
+    background: #0039a6;
+    color: white;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-name { font-size: 12px; color: #0039a6; margin-top: 8px; font-weight: 600; }
+
+.save-btn {
+    width: 100%;
+    background: #0039a6;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s;
+}
+
+.save-btn:hover { background: #002880; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+    .navbar { padding: 14px 18px; }
+    .page-header { padding: 24px 18px 8px; }
+    .grid { padding: 18px 18px 40px; gap: 16px; }
+    .modal-box { max-height: 95vh; height: 95vh; }
+    .modal-body { padding: 16px 18px; }
+    .modal-header, .modal-footer { padding-left: 18px; padding-right: 18px; }
 }
 
 </style>
 </head>
 <body>
 
-<h1>Ejercicios</h1>
-<p class="sub">Selecciona un ejercicio para comenzar tu práctica diaria</p>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <span class="navbar-title">Ejercicios</span>
+    <div class="navbar-right">
+        <button class="btn-add" onclick="abrirModal()">+ Nuevo ejercicio</button>
+        <a href="/Nexovoz/pages/indexadmid.php" class="btn-back">Panel admin</a>
+    </div>
+</nav>
 
-<div class="grid">
+<!-- HEADER -->
+<div class="page-header">
+    <h1>Biblioteca de ejercicios</h1>
+    <p>Gestiona y asigna ejercicios para tus pacientes</p>
+</div>
 
-    <!-- TARJETA -->
+<!-- GRID -->
+<div class="grid" id="grid">
+
+    <!-- Tarjetas estaticas base -->
     <div class="card">
-        <div class="icon"></div>
-        <h2>Pronunciación de palabras</h2>
-        <span class="tag">Articulación</span>
-
-        <p>
-            Ejercicios guiados para mejorar la claridad y precisión.
-        </p>
-
-        <button class="btn">Comenzar</button>
+        <div class="card-icon">🗣️</div>
+        <span class="card-tag">Articulacion</span>
+        <h3>Pronunciacion de palabras</h3>
+        <p>Ejercicios guiados para mejorar la claridad y precision al hablar.</p>
+        <div class="card-actions">
+            <button class="btn-comenzar">Comenzar</button>
+        </div>
     </div>
 
-    <!-- TARJETA -->
     <div class="card">
-        <div class="icon"></div>
-        <h2>Lectura en voz alta</h2>
-        <span class="tag">Fluidez</span>
-
-        <p>
-            Mejora ritmo, fluidez y expresividad al leer textos.
-        </p>
-
-        <button class="btn">Comenzar</button>
+        <div class="card-icon">📖</div>
+        <span class="card-tag">Fluidez</span>
+        <h3>Lectura en voz alta</h3>
+        <p>Mejora ritmo, fluidez y expresividad al leer textos en voz alta.</p>
+        <div class="card-actions">
+            <button class="btn-comenzar">Comenzar</button>
+        </div>
     </div>
 
-    <!-- TARJETA -->
     <div class="card">
-        <div class="icon"></div>
-        <h2>Respiración</h2>
-        <span class="tag">Control</span>
-
-        <p>
-            Técnicas para controlar la fluidez del habla.
-        </p>
-
-        <button class="btn">Comenzar</button>
+        <div class="card-icon">💨</div>
+        <span class="card-tag">Control</span>
+        <h3>Respiracion</h3>
+        <p>Tecnicas de respiracion para controlar la fluidez del habla.</p>
+        <div class="card-actions">
+            <button class="btn-comenzar">Comenzar</button>
+        </div>
     </div>
 
-    <!-- BOTON MAS -->
-    <div class="card add-card" onclick="abrirModal()">
-        +
+    <!-- Tarjetas dinamicas desde BD se insertan aqui via JS -->
+
+    <!-- Card agregar -->
+    <div class="card-add" onclick="abrirModal()">
+        <div class="plus">+</div>
+        <span>Agregar ejercicio</span>
     </div>
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL OVERLAY -->
+<div class="overlay" id="overlay">
 
-<div class="modal" id="modal">
+    <div class="modal-box">
 
-    <div class="modal-content">
+        <!-- Header fijo -->
+        <div class="modal-header">
+            <h2>Nuevo ejercicio</h2>
+            <button class="modal-close" onclick="cerrarModal()">&#x2715;</button>
+        </div>
 
-        <span class="close" onclick="cerrarModal()">&times;</span>
+        <!-- Body con scroll -->
+        <div class="modal-body">
+            <form id="formEjercicio" action="../backend/guardar_ejercicio.php" method="POST" enctype="multipart/form-data">
 
-        <h2>Agregar nuevo ejercicio</h2>
-
-        <form action="../backend/guardar_ejercicio.php" method="POST" enctype="multipart/form-data">
-
-            <div class="form-group">
-                <label>Título</label>
-                <input type="text" name="titulo" required>
-            </div>
-
-            <div class="form-group">
-                <label>Categoría</label>
-                <input type="text" name="categoria">
-            </div>
-
-            <div class="form-group">
-                <label>Descripción</label>
-                <textarea name="descripcion"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Subir archivo</label>
-
-                <div class="file-box">
-                    <input type="file" name="archivo">
+                <div class="form-group">
+                    <label>Titulo *</label>
+                    <input type="text" name="titulo" placeholder="Ej: Ejercicios de respiracion" required>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label>Link de video</label>
-                <input type="url" name="video" placeholder="https://youtube.com/...">
-            </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select name="categoria">
+                        <option value="">Seleccionar...</option>
+                        <option value="Articulacion">Articulacion</option>
+                        <option value="Fluidez">Fluidez</option>
+                        <option value="Control">Control</option>
+                        <option value="Vocabulario">Vocabulario</option>
+                        <option value="Comprension">Comprension</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
 
-            <button class="save-btn">
-                Guardar ejercicio
-            </button>
+                <div class="form-group">
+                    <label>Descripcion</label>
+                    <textarea name="descripcion" placeholder="Describe el objetivo y pasos del ejercicio..."></textarea>
+                </div>
 
-        </form>
+                <div class="form-group">
+                    <label>Archivo de apoyo</label>
+                    <div class="file-zone" onclick="document.getElementById('fileInput').click()">
+                        <p>PDF, imagen o audio (max 5 MB)</p>
+                        <span class="file-label">Seleccionar archivo</span>
+                        <input type="file" id="fileInput" name="archivo" accept=".pdf,.jpg,.jpeg,.png,.mp3,.wav" onchange="mostrarNombreArchivo(this)">
+                        <div class="file-name" id="fileName"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Link de video (YouTube)</label>
+                    <input type="url" name="video" placeholder="https://youtube.com/watch?v=...">
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Footer fijo -->
+        <div class="modal-footer">
+            <button class="save-btn" onclick="document.getElementById('formEjercicio').submit()">Guardar ejercicio</button>
+        </div>
 
     </div>
-
 </div>
 
 <script>
 
-function abrirModal(){
-    document.getElementById("modal").style.display = "flex";
+const iconosPorCategoria = {
+    'Articulacion': '🗣️',
+    'Fluidez':      '📖',
+    'Control':      '💨',
+    'Vocabulario':  '💬',
+    'Comprension':  '🧠',
+    'Otro':         '📋'
+};
+
+function abrirModal() {
+    document.getElementById('overlay').classList.add('open');
 }
 
-function cerrarModal(){
-    document.getElementById("modal").style.display = "none";
+function cerrarModal() {
+    document.getElementById('overlay').classList.remove('open');
 }
 
-window.onclick = function(e){
+document.getElementById('overlay').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+});
 
-    let modal = document.getElementById("modal");
-
-    if(e.target == modal){
-        modal.style.display = "none";
-    }
+function mostrarNombreArchivo(input) {
+    const el = document.getElementById('fileName');
+    el.textContent = input.files.length ? input.files[0].name : '';
 }
+
+function cargarEjercicios() {
+    fetch('../backend/obtener_ejercicios.php')
+        .then(r => r.json())
+        .then(data => {
+            const grid    = document.getElementById('grid');
+            const addCard = grid.querySelector('.card-add');
+            data.forEach(ej => {
+                const icono = iconosPorCategoria[ej.categoria] || '📋';
+                const videoBtn = ej.video
+                    ? `<a href="${ej.video}" target="_blank" class="btn-video">Ver video</a>`
+                    : '';
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <div class="card-icon">${icono}</div>
+                    <span class="card-tag">${ej.categoria || 'General'}</span>
+                    <h3>${ej.titulo}</h3>
+                    <p>${ej.descripcion || ''}</p>
+                    <div class="card-actions">
+                        <button class="btn-comenzar">Comenzar</button>
+                        ${videoBtn}
+                    </div>`;
+                grid.insertBefore(div, addCard);
+            });
+        })
+        .catch(() => {});
+}
+
+cargarEjercicios();
 
 </script>
 
