@@ -352,21 +352,21 @@ body {
       <label>Editar contraseña</label>
     </div>
 
-    <form action="editar_perfil.php" method="POST" id="formPerfil">
+    <form action="../backend/editar_perfil.php" method="POST" id="formPerfil">
       <input type="hidden" name="nombre" id="hidden-nombre">
       <input type="hidden" name="correo" id="hidden-correo">
       <input type="hidden" name="contraseña" id="hidden-pass">
       <button type="submit" class="save-btn">Guardar cambios</button>
     </form>
 
-    <a href="cerrar_sesion.php" style="display:block;margin-top:12px;text-align:center;color:#0d2f6e;font-weight:bold;">🚪 Cerrar sesión</a>
+    <a href="../backend/cerrar_sesion.php" style="display:block;margin-top:12px;text-align:center;color:#0d2f6e;font-weight:bold;">🚪 Cerrar sesión</a>
   </div>
 </div>
 
 <script>
 function abrirModal(){
   document.getElementById('overlay').classList.add('open');
-  fetch('obtener_usuario.php')
+  fetch('../backend/obtener_usuario.php')
     .then(res => res.json())
     .then(data => {
       if(data){

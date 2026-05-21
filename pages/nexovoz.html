@@ -1,0 +1,539 @@
+!DOCTYPE html
+html lang=es
+head
+meta charset=UTF-8
+meta name=viewport content=width=device-width, initial-scale=1.0
+titleNEXOVOZtitle
+
+style
+
+root{
+
+    --azul#003da5;
+    --azul-oscuro#001b4d;
+    --verde#97d700;
+    --verde-hover#84bf00;
+    --texto#dbe7ff;
+    --card#06245f;
+    --borde#0b4db8;
+
+}
+
+{
+    margin0;
+    padding0;
+    box-sizingborder-box;
+    font-family'Segoe UI', sans-serif;
+}
+
+body{
+
+    background
+    linear-gradient(
+    135deg,
+    #00142e,
+    #002766,
+    #001b4d
+    );
+
+    colorwhite;
+    min-height100vh;
+}
+
+ NAVBAR 
+
+nav{
+
+    width100%;
+    padding20px 60px;
+    displayflex;
+    justify-contentspace-between;
+    align-itemscenter;
+    border-bottom1px solid rgba(255,255,255,.1);
+
+}
+
+.logo{
+
+    font-size35px;
+    font-weightbold;
+    color#97d700;
+    letter-spacing2px;
+
+}
+
+.menu{
+
+    displayflex;
+    gap40px;
+
+}
+
+.menu a{
+
+    text-decorationnone;
+    color#dbe7ff;
+    transition.3s;
+
+}
+
+.menu ahover{
+
+    color#97d700;
+
+}
+
+ HERO 
+
+.hero{
+
+    min-height90vh;
+    displayflex;
+    justify-contentcenter;
+    align-itemscenter;
+    flex-directioncolumn;
+    text-aligncenter;
+    padding40px;
+
+}
+
+.hero h1{
+
+    font-size120px;
+    color#97d700;
+    margin-bottom20px;
+
+}
+
+.hero p{
+
+    font-size25px;
+    max-width900px;
+    line-height1.6;
+    color#dbe7ff;
+
+}
+
+.hero span{
+
+    color#97d700;
+    font-weightbold;
+
+}
+
+ BOTONES 
+
+.buttons{
+
+    margin-top40px;
+    displayflex;
+    gap20px;
+
+}
+
+.btn{
+
+    padding18px 45px;
+    bordernone;
+    border-radius14px;
+    cursorpointer;
+    font-size18px;
+    font-weightbold;
+    transition.3s;
+
+}
+
+.primary{
+
+    background#97d700;
+    color#001b4d;
+
+}
+
+.primaryhover{
+
+    background#84bf00;
+    transformtranslateY(-3px);
+
+}
+
+.secondary{
+
+    backgroundtransparent;
+    border2px solid #97d700;
+    color#97d700;
+
+}
+
+.secondaryhover{
+
+    background#97d700;
+    color#001b4d;
+
+}
+
+ TARJETAS 
+
+.section{
+
+    padding80px 60px;
+
+}
+
+.section h2{
+
+    font-size50px;
+    margin-bottom20px;
+
+}
+
+.section p{
+
+    color#dbe7ff;
+    margin-bottom40px;
+    max-width800px;
+    line-height1.8;
+
+}
+
+.grid{
+
+    displaygrid;
+    grid-template-columnsrepeat(auto-fit,minmax(280px,1fr));
+    gap30px;
+
+}
+
+.card{
+
+    background#06245f;
+    border1px solid #0b4db8;
+    border-radius25px;
+    padding35px;
+    transition.3s;
+
+}
+
+.cardhover{
+
+    transformtranslateY(-5px);
+
+}
+
+.icon{
+
+    width70px;
+    height70px;
+    border-radius20px;
+    background#003da5;
+    displayflex;
+    justify-contentcenter;
+    align-itemscenter;
+    font-size30px;
+    margin-bottom25px;
+
+}
+
+.card h3{
+
+    margin-bottom15px;
+    font-size28px;
+
+}
+
+.card p{
+
+    line-height1.8;
+    color#dbe7ff;
+
+}
+
+.tag{
+
+    displayinline-block;
+    margin-top20px;
+    background#003da5;
+    color#97d700;
+    padding8px 18px;
+    border-radius30px;
+    font-size14px;
+
+}
+
+ MODAL 
+
+.modal{
+
+    positionfixed;
+    top0;
+    left0;
+    width100%;
+    height100%;
+    backgroundrgba(0,0,0,.8);
+    displaynone;
+    justify-contentcenter;
+    align-itemscenter;
+    padding20px;
+
+}
+
+.modal-content{
+
+    width100%;
+    max-width450px;
+    background#06245f;
+    border-radius25px;
+    padding40px;
+    border1px solid #0b4db8;
+    text-aligncenter;
+    positionrelative;
+
+}
+
+.close{
+
+    positionabsolute;
+    top15px;
+    right20px;
+    font-size30px;
+    cursorpointer;
+
+}
+
+.modal h2{
+
+    margin-bottom30px;
+
+}
+
+.modal .btn{
+
+    width100%;
+    margin-top20px;
+
+}
+
+ RESPONSIVE 
+
+@media(max-width900px){
+
+    .hero h1{
+        font-size70px;
+    }
+
+    nav{
+        flex-directioncolumn;
+        gap20px;
+    }
+
+    .menu{
+        flex-wrapwrap;
+        justify-contentcenter;
+    }
+
+}
+
+style
+head
+body
+
+!-- NAV --
+
+nav
+
+    div class=logo
+        NEXOVOZ
+    div
+
+    div class=menu
+
+        a href=#Plataformaa
+        a href=#Educacióna
+        a href=#Comunidada
+        a href=#Nosotrosa
+
+    div
+
+nav
+
+!-- HERO --
+
+section class=hero
+
+    h1NEXOVOZh1
+
+    p
+
+        Un puente hacia la
+        spaninclusiónspan,
+        la spaneducaciónspan
+        y la spanigualdadspan.
+
+        Comunicación sin barreras para todos.
+
+    p
+
+    div class=buttons
+
+        button class=btn primary onclick=abrirModal()
+            Comenzar ahora
+        button
+
+        button class=btn secondary
+            Ver demostración
+        button
+
+    div
+
+section
+
+!-- TARJETAS --
+
+section class=section
+
+    h2Tecnología que abre puertash2
+
+    p
+
+        Diseñamos soluciones digitales para personas
+        con trastornos del lenguaje y dificultades
+        comunicativas.
+
+    p
+
+    div class=grid
+
+        div class=card
+
+            div class=icon🤝div
+
+            h3Inclusión Socialh3
+
+            p
+                Plataforma adaptada para conectar personas
+                y facilitar la participación digital.
+            p
+
+            div class=tag
+                Comunidad
+            div
+
+        div
+
+        div class=card
+
+            div class=icon📚div
+
+            h3Educación Accesibleh3
+
+            p
+                Recursos pedagógicos modernos con
+                apoyo adaptativo y multimodal.
+            p
+
+            div class=tag
+                Aprendizaje
+            div
+
+        div
+
+        div class=card
+
+            div class=icon🧠div
+
+            h3Neurodiversidadh3
+
+            p
+                Herramientas especializadas para
+                TEA, TDAH y dificultades del habla.
+            p
+
+            div class=tag
+                Neuroinclusión
+            div
+
+        div
+
+        div class=card
+
+            div class=icon🔊div
+
+            h3Comunicación AACh3
+
+            p
+                Sistemas de apoyo comunicativo,
+                síntesis de voz y lenguaje visual.
+            p
+
+            div class=tag
+                Tecnología
+            div
+
+        div
+
+    div
+
+section
+
+!-- MODAL --
+
+div class=modal id=modal
+
+    div class=modal-content
+
+        span class=close onclick=cerrarModal()
+            &times;
+        span
+
+        h2Bienvenido a NEXOVOZh2
+
+        a href=login.html
+
+            button class=btn secondary
+                Iniciar sesión
+            button
+
+        a
+
+        a href=registro.html
+
+            button class=btn primary
+                Registro
+            button
+
+        a
+
+    div
+
+div
+
+script
+
+function abrirModal(){
+
+    document.getElementById(modal).style.display = flex;
+
+}
+
+function cerrarModal(){
+
+    document.getElementById(modal).style.display = none;
+
+}
+
+window.onclick = function(e){
+
+    let modal = document.getElementById(modal);
+
+    if(e.target == modal){
+
+        modal.style.display = none;
+
+    }
+
+}
+
+script
+
+body
+html

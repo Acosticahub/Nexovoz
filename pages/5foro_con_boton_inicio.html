@@ -149,7 +149,7 @@ function render() {
 function toggle(i) { expandidos[i]=!expandidos[i]; render(); }
 
 function cargarMensajes() {
-  fetch('mostrar_foro.php')
+  fetch('../backend/mostrar_foro.php')
     .then(res => res.json())
     .then(data => {
       posts = data.map(m => ({ autor: m.nombre || 'Anónimo', texto: m.mensaje, fecha: m.fecha }));
@@ -165,7 +165,7 @@ function enviar() {
   const datos = new FormData();
   datos.append('mensaje', txt);
 
-  fetch('foro.php', { method: 'POST', body: datos })
+  fetch('../backend/foro.php', { method: 'POST', body: datos })
     .then(res => res.text())
     .then(data => {
       if (data === 'ok') {

@@ -22,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['usuario_nombre'] = $nombre;
         echo "<script>
             alert('Cambios guardados correctamente');
-            window.location='nexovozinicio.html';
+            window.location='../pages/nexovozinicio.html';
         </script>";
     } else {
         echo "<script>
             alert('Error al guardar los cambios');
-            window.location='nexovozinicio.html';
+            window.location='../pages/nexovozinicio.html';
         </script>";
     }
 }
