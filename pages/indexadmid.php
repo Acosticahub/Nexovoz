@@ -110,7 +110,7 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(140deg,#071a4e 
     <span class="nav-logo-txt">NEXO<br>VOZ</span>
   </a>
   <div class="nav-center">NEXOVOZ <span class="nav-badge">Admin</span></div>
-  <button class="avatar-btn" id="avatarBtn" onclick="toggleDd()" title="Mi perfil">
+  <button class="avatar-btn" id="avatarBtn" onclick="toggleDd()" title="Mi perfil" data-nolink>
     <svg viewBox="0 0 24 24" fill="none" stroke="#0039a6" stroke-width="2" stroke-linecap="round">
       <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
     </svg>
@@ -265,10 +265,7 @@ function guardarPerfil(){
     .then(r=>r.json())
     .then(d=>{
       if(d.ok){
-        if(d.avatar){
-          const img='<img src="'+d.avatar+'?t='+Date.now()+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
-          document.getElementById('avatarBtn').innerHTML=img;
-        }
+        if(d.avatar) window.updateGlobalAvatar && window.updateGlobalAvatar(d.avatar);
         cerrarEditPerfil();
         toast('Cambios guardados correctamente');
       } else { alert(d.msg||'Error al guardar'); }
@@ -283,5 +280,6 @@ function toast(msg){
   setTimeout(()=>{t.style.opacity='0';},2800);
 }
 </script>
+<script src="../assets/js/navbar-avatar.js"></script>
 </body>
 </html>

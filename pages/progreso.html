@@ -90,6 +90,9 @@ body { font-family: 'Poppins', sans-serif; background: linear-gradient(140deg,#0
   </a>
   <div class="nav-center">Mi Progreso</div>
   <a href="/Nexovoz/pages/nexovozinicio.html" class="btn-volver">&#8592; Volver</a>
+  <button id="avatarBtn" class="nav-avatar-global" title="Mi perfil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+  </button>
 </nav>
 
 <div class="wrap">
@@ -193,6 +196,6 @@ fetch('../backend/obtener_progreso.php')
       '<div class="empty-state"><div class="emoji">⚠️</div><h3>No se pudo cargar</h3><p>Verifica tu conexion e intenta de nuevo.</p></div>';
   });
 </script>
-
+<script src="../assets/js/navbar-avatar.js"></script>
 </body>
 </html>

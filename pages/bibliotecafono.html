@@ -112,7 +112,12 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(140deg,#071a4e 
     <a href="/Nexovoz/pages/ejerciosfono.html">Ejercicios</a>
     <a href="/Nexovoz/pages/agendar_cita_fonoaudiologia.html">Apoyo</a>
   </div>
-  <button class="nav-up-btn" onclick="abrirUpload()">+ Subir recurso</button>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <button class="nav-up-btn" onclick="abrirUpload()">+ Subir recurso</button>
+    <button id="avatarBtn" class="nav-avatar-global" title="Mi perfil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -406,5 +411,6 @@ function toast(msg) {
 
 cargarDB();
 </script>
+<script src="../assets/js/navbar-avatar.js"></script>
 </body>
 </html>

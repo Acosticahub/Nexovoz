@@ -402,7 +402,7 @@ body {
     </div>
     <div class="navbar-right">
         <button class="btn-add" onclick="abrirModal()">+ Nuevo ejercicio</button>
-        <div class="user-avatar" onclick="toggleFonoDd()" id="avatarBtn">
+        <div class="user-avatar" onclick="toggleFonoDd()" id="avatarBtn" data-nolink>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <circle cx="12" cy="8" r="4"/>
                 <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
@@ -676,10 +676,19 @@ function guardarPerfilFono() {
     const c=document.getElementById('fei-c').value.trim();
     const p=document.getElementById('fei-p').value;
     if(!n||!c){alert('Nombre y correo son obligatorios');return;}
-    document.getElementById('fen').value=n;
-    document.getElementById('fec').value=c;
-    document.getElementById('fep').value=p;
-    document.getElementById('frmFonoEdit').submit();
+    const fd=new FormData();
+    fd.append('nombre',n); fd.append('correo',c);
+    if(p) fd.append('contrasena',p);
+    fetch('/Nexovoz/backend/editar_perfil.php',{method:'POST',body:fd})
+        .then(r=>r.json())
+        .then(d=>{
+            if(d.ok){
+                cerrarEditFono();
+                if(d.avatar) window.updateGlobalAvatar && window.updateGlobalAvatar(d.avatar);
+                if(d.nombre) document.getElementById('fonoName').textContent=d.nombre||n;
+            } else { alert(d.msg||'Error al guardar'); }
+        })
+        .catch(()=>alert('Error de conexion'));
 }
 
 function cargarFono() {
@@ -689,8 +698,8 @@ function cargarFono() {
 }
 
 cargarFono();
-
 </script>
+<script src="../assets/js/navbar-avatar.js"></script>
 
 </body>
 </html>

@@ -73,6 +73,9 @@
   </a>
   <div class="nav-center">Ejercicios</div>
   <a href="/Nexovoz/pages/nexovozinicio.html" class="btn-volver">&#8592; Volver</a>
+  <button id="avatarBtn" class="nav-avatar-global" title="Mi perfil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" width="22" height="22"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+  </button>
 </nav>
 
 <!-- HEADER -->
@@ -174,5 +177,6 @@ function closeModal() {
 }
 function closeOnOverlay(e) { if (e.target===document.getElementById('overlay')) closeModal(); }
 </script>
+<script src="../assets/js/navbar-avatar.js"></script>
 </body>
 </html>
