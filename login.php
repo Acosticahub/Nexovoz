@@ -13,26 +13,26 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $nombre = $_POST['user'];
-    $pass = $_POST['pass'];
+    $correo = $_POST['correo'];
+    $pass = $_POST['contraseña'];
 
-    $stmt = $conn->prepare("SELECT * FROM sesion WHERE nombre = ?");
-    $stmt->bind_param("s", $nombre);
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE correo = ?");
+    $stmt->bind_param("s", $correo);
     $stmt->execute();
 
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && $pass === $user['password']) {
+    if ($user && $pass === $user['contraseña']) {
 
-        header("Location: men.pcsystem.html");
+        header("Location: nexovozinicio.html");
         exit();
 
     } else {
 
         echo "<script>
             alert('Intentar Nuevamente Conectarte');
-            window.location='login.html';
+            window.location='1Inisiodesesion.html';
         </script>";
     }
 }
