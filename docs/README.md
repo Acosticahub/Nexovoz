@@ -35,11 +35,14 @@ Nexovoz/
 │   ├── obtener_ejercicios.php  → GET: ejercicios (tabla ejerciciosfono)
 │   ├── guardar_resultado.php   → POST: guarda resultado prueba de voz
 │   ├── obtener_progreso.php    → GET: última prueba + total pruebas del usuario
+│   ├── biblioteca.php          → POST JSON: sube recurso a bibliotecafono (archivo + INSERT)
+│   ├── mostrar_biblioteca.php  → GET JSON: lista recursos de bibliotecafono
 │   ├── foro.php                → POST: nuevo mensaje en el foro
 │   └── mostrar_foro.php        → GET: últimos 50 mensajes del foro
 │
 ├── uploads/
-│   └── avatars/                → Imágenes de perfil subidas por usuarios
+│   ├── avatars/                → Imágenes de perfil subidas por usuarios
+│   └── biblioteca/             → Archivos de recursos terapéuticos subidos por fonoaudiólogos
 │
 ├── assets/
 │   ├── img/logo.png            → Logo circular NEXOVOZ
